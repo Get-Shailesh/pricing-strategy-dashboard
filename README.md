@@ -213,7 +213,7 @@ pricing-strategy-dashboard/
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/YOUR_USERNAME/pricing-strategy-dashboard.git
+git clone https://github.com/Get-Shailesh/pricing-strategy-dashboard.git
 cd pricing-strategy-dashboard
 
 # 2. Install Python dependencies

@@ -1,901 +1,1662 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pricing Strategy Analysis v2.0 — Advanced Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0d0f14;--surface:#14171f;--surface2:#1c2030;--surface3:#222638;
-  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
-  --text:#e8eaf0;--text2:#8b90a0;--text3:#555b6e;
-  --accent:#4ade80;--blue:#3b82f6;--amber:#f59e0b;--pink:#f472b6;
-  --purple:#a78bfa;--teal:#34d399;--red:#f87171;
-  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
-}
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.6;min-height:100vh}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing Strategy Analysis v2.0 — Advanced Dashboard</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-/* ── Header ── */
-.header{background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
-.logo-wrap{display:flex;align-items:center;gap:12px}
-.logo-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--blue));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#000}
-.header-title{font-size:15px;font-weight:600}
-.header-sub{font-size:11px;color:var(--text2);margin-top:1px}
-.header-right{display:flex;align-items:center;gap:10px}
-.badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;font-family:var(--mono)}
-.badge-green{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2);color:var(--accent)}
-.badge-blue{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:var(--blue)}
-.export-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);padding:5px 12px;border-radius:6px;font-size:12px;cursor:pointer;font-family:var(--font);transition:all .15s}
-.export-btn:hover{color:var(--text);border-color:var(--accent);background:rgba(74,222,128,.05)}
+    :root {
+      --bg: #0d0f14;
+      --surface: #14171f;
+      --surface2: #1c2030;
+      --surface3: #222638;
+      --border: rgba(255, 255, 255, 0.06);
+      --border2: rgba(255, 255, 255, 0.12);
+      --text: #e8eaf0;
+      --text2: #8b90a0;
+      --text3: #555b6e;
+      --accent: #4ade80;
+      --blue: #3b82f6;
+      --amber: #f59e0b;
+      --pink: #f472b6;
+      --purple: #a78bfa;
+      --teal: #34d399;
+      --red: #f87171;
+      --font: 'DM Sans', sans-serif;
+      --mono: 'DM Mono', monospace;
+    }
 
-/* ── Filter Bar ── */
-.filter-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:.7rem 2rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.filter-label{font-size:11px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
-.filter-btn{padding:4px 14px;border-radius:20px;font-size:12px;cursor:pointer;font-family:var(--mono);font-weight:500;border:1px solid var(--border2);background:transparent;color:var(--text2);transition:all .15s}
-.filter-btn:hover,.filter-btn.active{color:var(--text);border-color:var(--accent);background:rgba(74,222,128,.08)}
-.filter-sep{width:1px;height:20px;background:var(--border);margin:0 4px}
-.segment-filter{margin-left:auto;display:flex;align-items:center;gap:8px}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh
+    }
 
-/* ── Layout ── */
-.main{max-width:1200px;margin:0 auto;padding:2rem 2rem 5rem}
-.section{margin-bottom:2.5rem}
-.section-header{display:flex;align-items:baseline;gap:12px;margin-bottom:1rem}
-.sec-num{font-size:11px;font-weight:500;font-family:var(--mono);color:var(--accent);background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.15);border-radius:4px;padding:2px 7px;flex-shrink:0}
-.sec-title{font-size:15px;font-weight:600}
-.sec-desc{font-size:12px;color:var(--text2);margin-top:2px}
+    /* ── Header ── */
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200
+    }
 
-/* ── Cards ── */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem}
-.card-sm{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem}
-.card-title{font-size:13px;font-weight:500;margin-bottom:3px}
-.card-sub{font-size:12px;color:var(--text2);margin-bottom:1.25rem}
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
 
-/* ── KPI ── */
-.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:2rem}
-.kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;position:relative;overflow:hidden}
-.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
-.kpi-0::before{background:linear-gradient(90deg,var(--accent),transparent)}
-.kpi-1::before{background:linear-gradient(90deg,var(--blue),transparent)}
-.kpi-2::before{background:linear-gradient(90deg,var(--amber),transparent)}
-.kpi-3::before{background:linear-gradient(90deg,var(--purple),transparent)}
-.kpi-4::before{background:linear-gradient(90deg,var(--teal),transparent)}
-.kpi-label{font-size:11px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-.kpi-val{font-size:24px;font-weight:600;letter-spacing:-.5px}
-.kpi-delta{font-size:11px;margin-top:4px;color:var(--text2)}
-.up{color:var(--accent)}.dn{color:var(--red)}
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--accent), var(--blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      color: #000
+    }
 
-/* ── Grid Layouts ── */
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.col-6-4{display:grid;grid-template-columns:3fr 2fr;gap:14px}
+    .header-title {
+      font-size: 15px;
+      font-weight: 600
+    }
 
-/* ── Legend ── */
-.legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:14px;font-size:12px;color:var(--text2)}
-.legend span{display:flex;align-items:center;gap:5px}
-.leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+    .header-sub {
+      font-size: 11px;
+      color: var(--text2);
+      margin-top: 1px
+    }
 
-/* ── Table ── */
-.data-table{width:100%;border-collapse:collapse;font-size:12.5px}
-.data-table th{font-size:11px;font-weight:500;color:var(--text3);text-align:left;padding:6px 10px;border-bottom:1px solid var(--border);font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em}
-.data-table td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text)}
-.data-table tr:last-child td{border-bottom:none}
-.badge-sm{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:500;font-family:var(--mono)}
-.e-elastic{background:rgba(74,222,128,.12);color:var(--accent);border:1px solid rgba(74,222,128,.2)}
-.e-inelastic{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.2)}
-.e-overpriced{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.2)}
-.e-under{background:rgba(74,222,128,.12);color:var(--accent);border:1px solid rgba(74,222,128,.2)}
-.e-parity{background:rgba(85,91,110,.15);color:var(--text2);border:1px solid var(--border2)}
-.e-star{background:rgba(74,222,128,.12);color:var(--accent);border:1px solid rgba(74,222,128,.2)}
-.e-cashcow{background:rgba(59,130,246,.12);color:var(--blue);border:1px solid rgba(59,130,246,.2)}
-.e-question{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.2)}
-.e-dog{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.2)}
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
 
-/* ── Competitor bars ── */
-.comp-bar-wrap{margin-bottom:14px}
-.comp-bar-label{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text2);margin-bottom:5px}
-.comp-bar-label strong{color:var(--text);font-weight:500}
-.bar-track{background:var(--surface2);border-radius:4px;height:12px;position:relative}
-.bar-fill{height:12px;border-radius:4px;position:absolute;left:0;top:0}
-.bar-comp{height:12px;border-radius:4px;position:absolute;top:0;opacity:.28}
+    .badge {
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 500;
+      font-family: var(--mono)
+    }
 
-/* ── Simulator ── */
-.sim-row{display:flex;align-items:center;gap:14px;margin-bottom:1rem}
-.sim-label{font-size:12px;color:var(--text2);width:110px;flex-shrink:0;font-family:var(--mono)}
-.sim-val{font-size:13px;font-weight:500;color:var(--accent);min-width:70px;font-family:var(--mono);text-align:right}
-input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:4px;background:var(--surface2);border-radius:2px;outline:none;cursor:pointer;border:1px solid var(--border2)}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 0 3px rgba(74,222,128,.15)}
-select{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:5px 10px;border-radius:6px;font-family:var(--mono);font-size:12px;cursor:pointer;outline:none}
-select:focus{border-color:var(--accent)}
+    .badge-green {
+      background: rgba(74, 222, 128, .1);
+      border: 1px solid rgba(74, 222, 128, .2);
+      color: var(--accent)
+    }
 
-/* ── Rev cards ── */
-.rev-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:1rem}
-.rev-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.8rem 1rem;text-align:center}
-.rev-card .label{font-size:11px;color:var(--text3);font-family:var(--mono);margin-bottom:4px}
-.rev-card .value{font-size:18px;font-weight:600}
+    .badge-blue {
+      background: rgba(59, 130, 246, .1);
+      border: 1px solid rgba(59, 130, 246, .2);
+      color: var(--blue)
+    }
 
-/* ── Insight ── */
-.insight{background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-radius:8px;padding:.85rem 1rem;font-size:12.5px;color:#93c5fd;line-height:1.7;margin-top:1rem}
-.insight strong{color:#bfdbfe}
-.insight-warn{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);border-radius:8px;padding:.85rem 1rem;font-size:12.5px;color:#fcd34d;line-height:1.7;margin-top:.75rem}
-.insight-success{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.15);border-radius:8px;padding:.85rem 1rem;font-size:12.5px;color:#86efac;line-height:1.7;margin-top:.75rem}
+    .export-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      color: var(--text2);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all .15s
+    }
 
-/* ── BCG ── */
-.bcg-wrap{position:relative;width:100%;height:340px}
-.bcg-label{position:absolute;font-size:11px;font-family:var(--mono);font-weight:500}
+    .export-btn:hover {
+      color: var(--text);
+      border-color: var(--accent);
+      background: rgba(74, 222, 128, .05)
+    }
 
-/* ── A/B ── */
-.ab-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
-.ab-row:last-child{border-bottom:none}
-.ab-cat{font-size:13px;font-weight:500}
-.ab-lift{font-size:15px;font-weight:600;font-family:var(--mono)}
+    /* ── Filter Bar ── */
+    .filter-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: .7rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap
+    }
 
-/* ── ML ── */
-.fi-bar-wrap{margin-bottom:8px}
-.fi-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px}
-.fi-track{background:var(--surface2);border-radius:3px;height:8px}
-.fi-fill{height:8px;border-radius:3px;background:var(--blue)}
+    .filter-label {
+      font-size: 11px;
+      color: var(--text3);
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: .06em
+    }
 
-/* ── Bundle ── */
-.bundle-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
-.bundle-row:last-child{border-bottom:none}
-.bundle-name{font-size:13px;font-weight:500}
-.bundle-desc{font-size:12px;color:var(--text2);margin-top:2px}
-.bundle-uplift{font-size:15px;font-weight:600;color:var(--accent);font-family:var(--mono)}
+    .filter-btn {
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: var(--mono);
+      font-weight: 500;
+      border: 1px solid var(--border2);
+      background: transparent;
+      color: var(--text2);
+      transition: all .15s
+    }
 
-/* ── Anomaly ── */
-.anomaly-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-family:var(--mono)}
-.a-normal{color:var(--accent);background:rgba(74,222,128,.1)}
-.a-high{color:var(--red);background:rgba(248,113,113,.1)}
-.a-low{color:var(--amber);background:rgba(245,158,11,.1)}
+    .filter-btn:hover,
+    .filter-btn.active {
+      color: var(--text);
+      border-color: var(--accent);
+      background: rgba(74, 222, 128, .08)
+    }
 
-/* ── Footer ── */
-.footer{text-align:center;padding:2rem;font-size:12px;color:var(--text3);font-family:var(--mono);border-top:1px solid var(--border);margin-top:1rem}
+    .filter-sep {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+      margin: 0 4px
+    }
 
-@media(max-width:900px){
-  .kpi-grid{grid-template-columns:repeat(2,1fr)}
-  .two-col,.three-col,.col-6-4{grid-template-columns:1fr}
-  .main{padding:1.25rem 1rem 3rem}
-  .header{padding:1rem 1.25rem}
-}
-</style>
+    .segment-filter {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    /* ── Layout ── */
+    .main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 2rem 5rem
+    }
+
+    .section {
+      margin-bottom: 2.5rem
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 1rem
+    }
+
+    .sec-num {
+      font-size: 11px;
+      font-weight: 500;
+      font-family: var(--mono);
+      color: var(--accent);
+      background: rgba(74, 222, 128, .08);
+      border: 1px solid rgba(74, 222, 128, .15);
+      border-radius: 4px;
+      padding: 2px 7px;
+      flex-shrink: 0
+    }
+
+    .sec-title {
+      font-size: 15px;
+      font-weight: 600
+    }
+
+    .sec-desc {
+      font-size: 12px;
+      color: var(--text2);
+      margin-top: 2px
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem
+    }
+
+    .card-sm {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 3px
+    }
+
+    .card-sub {
+      font-size: 12px;
+      color: var(--text2);
+      margin-bottom: 1.25rem
+    }
+
+    /* ── KPI ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 2rem
+    }
+
+    .kpi {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      position: relative;
+      overflow: hidden
+    }
+
+    .kpi::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px
+    }
+
+    .kpi-0::before {
+      background: linear-gradient(90deg, var(--accent), transparent)
+    }
+
+    .kpi-1::before {
+      background: linear-gradient(90deg, var(--blue), transparent)
+    }
+
+    .kpi-2::before {
+      background: linear-gradient(90deg, var(--amber), transparent)
+    }
+
+    .kpi-3::before {
+      background: linear-gradient(90deg, var(--purple), transparent)
+    }
+
+    .kpi-4::before {
+      background: linear-gradient(90deg, var(--teal), transparent)
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      color: var(--text3);
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 6px
+    }
+
+    .kpi-val {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -.5px
+    }
+
+    .kpi-delta {
+      font-size: 11px;
+      margin-top: 4px;
+      color: var(--text2)
+    }
+
+    .up {
+      color: var(--accent)
+    }
+
+    .dn {
+      color: var(--red)
+    }
+
+    /* ── Grid Layouts ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px
+    }
+
+    .col-6-4 {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 14px
+    }
+
+    /* ── Legend ── */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 14px;
+      font-size: 12px;
+      color: var(--text2)
+    }
+
+    .legend span {
+      display: flex;
+      align-items: center;
+      gap: 5px
+    }
+
+    .leg-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      flex-shrink: 0
+    }
+
+    /* ── Table ── */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px
+    }
+
+    .data-table th {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text3);
+      text-align: left;
+      padding: 6px 10px;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: .04em
+    }
+
+    .data-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text)
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: none
+    }
+
+    .badge-sm {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      font-family: var(--mono)
+    }
+
+    .e-elastic {
+      background: rgba(74, 222, 128, .12);
+      color: var(--accent);
+      border: 1px solid rgba(74, 222, 128, .2)
+    }
+
+    .e-inelastic {
+      background: rgba(245, 158, 11, .12);
+      color: var(--amber);
+      border: 1px solid rgba(245, 158, 11, .2)
+    }
+
+    .e-overpriced {
+      background: rgba(248, 113, 113, .12);
+      color: var(--red);
+      border: 1px solid rgba(248, 113, 113, .2)
+    }
+
+    .e-under {
+      background: rgba(74, 222, 128, .12);
+      color: var(--accent);
+      border: 1px solid rgba(74, 222, 128, .2)
+    }
+
+    .e-parity {
+      background: rgba(85, 91, 110, .15);
+      color: var(--text2);
+      border: 1px solid var(--border2)
+    }
+
+    .e-star {
+      background: rgba(74, 222, 128, .12);
+      color: var(--accent);
+      border: 1px solid rgba(74, 222, 128, .2)
+    }
+
+    .e-cashcow {
+      background: rgba(59, 130, 246, .12);
+      color: var(--blue);
+      border: 1px solid rgba(59, 130, 246, .2)
+    }
+
+    .e-question {
+      background: rgba(245, 158, 11, .12);
+      color: var(--amber);
+      border: 1px solid rgba(245, 158, 11, .2)
+    }
+
+    .e-dog {
+      background: rgba(248, 113, 113, .12);
+      color: var(--red);
+      border: 1px solid rgba(248, 113, 113, .2)
+    }
+
+    /* ── Competitor bars ── */
+    .comp-bar-wrap {
+      margin-bottom: 14px
+    }
+
+    .comp-bar-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text2);
+      margin-bottom: 5px
+    }
+
+    .comp-bar-label strong {
+      color: var(--text);
+      font-weight: 500
+    }
+
+    .bar-track {
+      background: var(--surface2);
+      border-radius: 4px;
+      height: 12px;
+      position: relative
+    }
+
+    .bar-fill {
+      height: 12px;
+      border-radius: 4px;
+      position: absolute;
+      left: 0;
+      top: 0
+    }
+
+    .bar-comp {
+      height: 12px;
+      border-radius: 4px;
+      position: absolute;
+      top: 0;
+      opacity: .28
+    }
+
+    /* ── Simulator ── */
+    .sim-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 1rem
+    }
+
+    .sim-label {
+      font-size: 12px;
+      color: var(--text2);
+      width: 110px;
+      flex-shrink: 0;
+      font-family: var(--mono)
+    }
+
+    .sim-val {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      min-width: 70px;
+      font-family: var(--mono);
+      text-align: right
+    }
+
+    input[type=range] {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      background: var(--surface2);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+      border: 1px solid var(--border2)
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: 0 0 0 3px rgba(74, 222, 128, .15)
+    }
+
+    select {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      color: var(--text);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 12px;
+      cursor: pointer;
+      outline: none
+    }
+
+    select:focus {
+      border-color: var(--accent)
+    }
+
+    /* ── Rev cards ── */
+    .rev-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 1rem
+    }
+
+    .rev-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .8rem 1rem;
+      text-align: center
+    }
+
+    .rev-card .label {
+      font-size: 11px;
+      color: var(--text3);
+      font-family: var(--mono);
+      margin-bottom: 4px
+    }
+
+    .rev-card .value {
+      font-size: 18px;
+      font-weight: 600
+    }
+
+    /* ── Insight ── */
+    .insight {
+      background: rgba(59, 130, 246, .06);
+      border: 1px solid rgba(59, 130, 246, .15);
+      border-radius: 8px;
+      padding: .85rem 1rem;
+      font-size: 12.5px;
+      color: #93c5fd;
+      line-height: 1.7;
+      margin-top: 1rem
+    }
+
+    .insight strong {
+      color: #bfdbfe
+    }
+
+    .insight-warn {
+      background: rgba(245, 158, 11, .06);
+      border: 1px solid rgba(245, 158, 11, .15);
+      border-radius: 8px;
+      padding: .85rem 1rem;
+      font-size: 12.5px;
+      color: #fcd34d;
+      line-height: 1.7;
+      margin-top: .75rem
+    }
+
+    .insight-success {
+      background: rgba(74, 222, 128, .06);
+      border: 1px solid rgba(74, 222, 128, .15);
+      border-radius: 8px;
+      padding: .85rem 1rem;
+      font-size: 12.5px;
+      color: #86efac;
+      line-height: 1.7;
+      margin-top: .75rem
+    }
+
+    /* ── BCG ── */
+    .bcg-wrap {
+      position: relative;
+      width: 100%;
+      height: 340px
+    }
+
+    .bcg-label {
+      position: absolute;
+      font-size: 11px;
+      font-family: var(--mono);
+      font-weight: 500
+    }
+
+    /* ── A/B ── */
+    .ab-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .ab-row:last-child {
+      border-bottom: none
+    }
+
+    .ab-cat {
+      font-size: 13px;
+      font-weight: 500
+    }
+
+    .ab-lift {
+      font-size: 15px;
+      font-weight: 600;
+      font-family: var(--mono)
+    }
+
+    /* ── ML ── */
+    .fi-bar-wrap {
+      margin-bottom: 8px
+    }
+
+    .fi-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text2);
+      margin-bottom: 4px
+    }
+
+    .fi-track {
+      background: var(--surface2);
+      border-radius: 3px;
+      height: 8px
+    }
+
+    .fi-fill {
+      height: 8px;
+      border-radius: 3px;
+      background: var(--blue)
+    }
+
+    /* ── Bundle ── */
+    .bundle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .bundle-row:last-child {
+      border-bottom: none
+    }
+
+    .bundle-name {
+      font-size: 13px;
+      font-weight: 500
+    }
+
+    .bundle-desc {
+      font-size: 12px;
+      color: var(--text2);
+      margin-top: 2px
+    }
+
+    .bundle-uplift {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--accent);
+      font-family: var(--mono)
+    }
+
+    /* ── Anomaly ── */
+    .anomaly-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: var(--mono)
+    }
+
+    .a-normal {
+      color: var(--accent);
+      background: rgba(74, 222, 128, .1)
+    }
+
+    .a-high {
+      color: var(--red);
+      background: rgba(248, 113, 113, .1)
+    }
+
+    .a-low {
+      color: var(--amber);
+      background: rgba(245, 158, 11, .1)
+    }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 12px;
+      color: var(--text3);
+      font-family: var(--mono);
+      border-top: 1px solid var(--border);
+      margin-top: 1rem
+    }
+
+    @media(max-width:900px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .two-col,
+      .three-col,
+      .col-6-4 {
+        grid-template-columns: 1fr
+      }
+
+      .main {
+        padding: 1.25rem 1rem 3rem
+      }
+
+      .header {
+        padding: 1rem 1.25rem
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="logo-wrap">
-    <div class="logo-mark">P</div>
-    <div>
-      <div class="header-title">Pricing Strategy Analysis <span style="color:var(--text2);font-weight:400">v2.0</span></div>
-      <div class="header-sub">60 products · 6 categories · 17 improvements · FAANG-grade analytics</div>
-    </div>
-  </div>
-  <div class="header-right">
-    <span class="badge badge-green">Live Dashboard</span>
-    <span class="badge badge-blue" id="filterBadge">All Categories</span>
-    <button class="export-btn" onclick="exportCSV()">↓ Export CSV</button>
-  </div>
-</div>
-
-<!-- FILTER BAR -->
-<div class="filter-bar">
-  <span class="filter-label">Category</span>
-  <button class="filter-btn active" data-cat="All" onclick="setFilter('All',this)">All</button>
-  <button class="filter-btn" data-cat="Electronics" onclick="setFilter('Electronics',this)">Electronics</button>
-  <button class="filter-btn" data-cat="Clothing" onclick="setFilter('Clothing',this)">Clothing</button>
-  <button class="filter-btn" data-cat="Home & Kitchen" onclick="setFilter('Home & Kitchen',this)">Home & Kitchen</button>
-  <button class="filter-btn" data-cat="Sports" onclick="setFilter('Sports',this)">Sports</button>
-  <button class="filter-btn" data-cat="Beauty" onclick="setFilter('Beauty',this)">Beauty</button>
-  <button class="filter-btn" data-cat="Books" onclick="setFilter('Books',this)">Books</button>
-  <div class="filter-sep"></div>
-  <span class="filter-label">Segment</span>
-  <select id="segFilter" onchange="setSegFilter()">
-    <option value="All">All Segments</option>
-    <option value="Budget">Budget</option>
-    <option value="Mid-range">Mid-range</option>
-    <option value="Premium">Premium</option>
-    <option value="Luxury">Luxury</option>
-  </select>
-</div>
-
-<div class="main">
-
-<!-- KPIs -->
-<div class="kpi-grid">
-  <div class="kpi kpi-0"><div class="kpi-label">Total Revenue</div><div class="kpi-val" id="kRev">—</div><div class="kpi-delta up" id="kRevD">—</div></div>
-  <div class="kpi kpi-1"><div class="kpi-label">Avg Price</div><div class="kpi-val" id="kPrice">—</div><div class="kpi-delta" id="kPriceD" style="color:var(--text2)">—</div></div>
-  <div class="kpi kpi-2"><div class="kpi-label">Units Sold</div><div class="kpi-val" id="kUnits">—</div><div class="kpi-delta up" id="kUnitsD">—</div></div>
-  <div class="kpi kpi-3"><div class="kpi-label">Avg Margin</div><div class="kpi-val" id="kMargin">—</div><div class="kpi-delta" id="kMarginD" style="color:var(--text2)">—</div></div>
-  <div class="kpi kpi-4"><div class="kpi-label">Avg Rating</div><div class="kpi-val" id="kRating">—</div><div class="kpi-delta" style="color:var(--text2)">Out of 5.0</div></div>
-</div>
-
-<!-- LAYER 1: Sales vs Price -->
-<div class="section">
-  <div class="section-header"><span class="sec-num">01</span><div><div class="sec-title">Sales vs Price Analysis</div><div class="sec-desc">Volume and revenue distribution across categories and price tiers</div></div></div>
-  <div class="two-col">
-    <div class="card">
-      <div class="card-title">Units sold by category</div>
-      <div class="card-sub">Filtered by active category & segment selection</div>
-      <div class="legend" id="leg1"></div>
-      <div style="position:relative;width:100%;height:240px"><canvas id="c1"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Revenue by price tier</div>
-      <div class="card-sub">Budget · Mid-range · Premium · Luxury breakdown</div>
-      <div style="position:relative;width:100%;height:240px"><canvas id="c_tier"></canvas></div>
-    </div>
-  </div>
-</div>
-
-<!-- LAYER 2: Elasticity -->
-<div class="section">
-  <div class="section-header"><span class="sec-num">02</span><div><div class="sec-title">Demand Elasticity Engine</div><div class="sec-desc">Per-category PED — not a single global number</div></div></div>
-  <div class="two-col">
-    <div class="card">
-      <div class="card-title">Per-category elasticity (PED)</div>
-      <div class="card-sub">Blue = elastic (price sensitive) · Amber = inelastic · Red line = threshold</div>
-      <div style="position:relative;width:100%;height:220px"><canvas id="c2"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Elasticity classification & strategy</div>
-      <div class="card-sub">PED > 1 = reduce price to grow volume · PED < 1 = raise price safely</div>
-      <table class="data-table" id="elasTable"></table>
-    </div>
-  </div>
-</div>
-
-<!-- LAYER 3: Competitor -->
-<div class="section">
-  <div class="section-header"><span class="sec-num">03</span><div><div class="sec-title">Competitor Benchmarking</div><div class="sec-desc">Price gap analysis + opportunity matrix</div></div></div>
-  <div class="col-6-4">
-    <div class="card">
-      <div class="card-title">Your price vs competitor — category level</div>
-      <div class="card-sub">Solid = your price · Faded = competitor · Labels show gap & status</div>
-      <div id="compBars" style="margin-top:.5rem"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Opportunity matrix</div>
-      <div class="card-sub">Underpriced products with raise potential</div>
-      <table class="data-table" id="oppTable"></table>
-      <div class="insight" id="compInsight"></div>
-    </div>
-  </div>
-</div>
-
-<!-- LAYER 4: Discount Simulator -->
-<div class="section">
-  <div class="section-header"><span class="sec-num">04</span><div><div class="sec-title">Discount Strategy Simulator</div><div class="sec-desc">Category-aware elasticity · Find the sweet spot for each category separately</div></div></div>
-  <div class="card">
-    <div class="card-title">Live revenue simulator</div>
-    <div class="card-sub">Select a category — elasticity adjusts automatically. Drag sliders to optimise.</div>
-    <div style="display:flex;align-items:center;gap:12px;margin:.75rem 0 1.25rem">
-      <span class="sim-label">Category</span>
-      <select id="simCatSelect" onchange="calcSim()">
-        <option>Electronics</option><option>Clothing</option><option>Home & Kitchen</option>
-        <option>Sports</option><option>Beauty</option><option>Books</option>
-      </select>
-      <span style="font-size:12px;color:var(--text3);font-family:var(--mono)" id="elasBadge"></span>
-    </div>
-    <div class="sim-row">
-      <div class="sim-label">Discount %</div>
-      <input type="range" min="0" max="50" value="10" step="1" id="discSlider" oninput="calcSim()">
-      <div class="sim-val" id="discVal">10%</div>
-    </div>
-    <div class="sim-row">
-      <div class="sim-label">Base price ₹</div>
-      <input type="range" min="200" max="5000" value="1200" step="50" id="priceSlider" oninput="calcSim()">
-      <div class="sim-val" id="priceVal">₹1,200</div>
-    </div>
-    <div class="rev-cards">
-      <div class="rev-card"><div class="label">Effective price</div><div class="value" id="simEffPrice">—</div></div>
-      <div class="rev-card"><div class="label">Projected units</div><div class="value" id="simUnits">—</div></div>
-      <div class="rev-card"><div class="label">Projected revenue</div><div class="value" id="simRev" style="color:var(--accent)">—</div></div>
-    </div>
-    <div style="position:relative;width:100%;height:200px;margin-top:1.25rem"><canvas id="c3"></canvas></div>
-    <div class="insight" id="simInsight"></div>
-  </div>
-</div>
-
-<!-- BCG MATRIX -->
-<div class="section">
-  <div class="section-header"><span class="sec-num">05</span><div><div class="sec-title">BCG Matrix — Margin vs Volume</div><div class="sec-desc">Stars · Cash Cows · Question Marks · Dogs — applied to product pricing</div></div></div>
-  <div class="two-col">
-    <div class="card">
-      <div class="card-title">BCG quadrant chart</div>
-      <div class="card-sub">Bubble size = revenue · Axes split at category medians</div>
-      <div style="position:relative;width:100%;height:300px"><canvas id="cBCG"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Product quadrant classification</div>
-      <div class="card-sub">Filtered by current category selection</div>
-      <table class="data-table" id="bcgTable"></table>
-    </div>
-  </div>
-</div>
-
-<!-- A/B TEST -->
-<div class="section">
-  <div class="section-header"><span class="sec-num">06</span><div><div class="sec-title">A/B Test Simulation</div><div class="sec-desc">Control (current price) vs Treatment (optimised price) — p-value significance testing</div></div></div>
-  <div class="two-col">
-    <div class="card">
-      <div class="card-title">A/B test results by category</div>
-      <div class="card-sub">n=500 per group · 95% confidence level</div>
-      <div style="position:relative;width:100%;height:250px"><canvas id="cAB"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Significance summary</div>
-      <div class="card-sub">✅ = statistically significant lift · ❌ = no significant difference</div>
-      <div id="abRows"></div>
-      <div class="insight-success" id="abInsight"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ANOMALY DETECTION -->
-<div class="section">
-  <div class="section-header"><span class="sec-num">07</span><div><div class="sec-title">Anomaly Detection</div><div class="sec-desc">IQR-based outlier flagging — products priced significantly outside their category band</div></div></div>
-  <div class="two-col">
-    <div class="card">
-      <div class="card-title">Price z-scores by product</div>
-      <div class="card-sub">Red dots = anomalies (|z| > 2) · Products outside normal pricing band</div>
-      <div style="position:relative;width:100%;height:260px"><canvas id="cAnom"></canvas></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Flagged products</div>
-      <div class="card-sub">Products with anomalous pricing vs category peers</div>
-      <table class="data-table" id="anomTable"></table>
-      <div class="insight-warn" id="anomInsight"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ML PRICE PREDICTION -->
-<div class="section">
-  <div class="section-header"><span class="sec-num">08</span><div><div class="sec-title">ML Price Prediction</div><div class="sec-desc">Random Forest model trained on 60 products — predicts optimal price from cost, competitor, volume, rating</div></div></div>
-  <div class="card">
-    <div class="card-title">ML model: feature importance & price recommendations</div>
-    <div class="card-sub">Model R² ≈ 0.94 · MAE ≈ ₹85 · Features: competitor price, cost price, units sold, discount %, rating, category, segment</div>
-    <div class="three-col" style="margin-bottom:1.5rem;margin-top:.5rem">
-      <div class="rev-card"><div class="label">Model R²</div><div class="value" style="color:var(--accent)">0.94</div></div>
-      <div class="rev-card"><div class="label">MAE</div><div class="value">₹85</div></div>
-      <div class="rev-card"><div class="label">RMSE</div><div class="value">₹124</div></div>
-    </div>
-    <div class="two-col">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-wrap">
+      <div class="logo-mark">P</div>
       <div>
-        <div style="font-size:12px;color:var(--text2);margin-bottom:.75rem;font-family:var(--mono)">FEATURE IMPORTANCE</div>
-        <div id="featureImportance"></div>
-      </div>
-      <div>
-        <div style="font-size:12px;color:var(--text2);margin-bottom:.75rem;font-family:var(--mono)">ML PRICE RECOMMENDATIONS (sample)</div>
-        <table class="data-table" id="mlTable"></table>
+        <div class="header-title">Pricing Strategy Analysis <span style="color:var(--text2);font-weight:400">v2.0</span>
+        </div>
+        <div class="header-sub">60 products · 6 categories · 17 improvements · FAANG-grade analytics</div>
       </div>
     </div>
-    <div class="insight" id="mlInsight"></div>
-  </div>
-</div>
-
-<!-- LAYER 5: Bundling -->
-<div class="section">
-  <div class="section-header"><span class="sec-num">09</span><div><div class="sec-title">Bundling Ideas & Revenue Impact</div><div class="sec-desc">Co-purchase correlation + projected revenue uplift per bundle strategy</div></div></div>
-  <div class="two-col">
-    <div class="card">
-      <div class="card-title">Bundle recommendations</div>
-      <div class="card-sub">Ranked by projected revenue uplift</div>
-      <div id="bundleList"></div>
-      <div class="insight-success" id="bundleInsight"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Cumulative revenue waterfall</div>
-      <div class="card-sub">Stacked impact of all bundle strategies</div>
-      <div style="position:relative;width:100%;height:280px"><canvas id="c4"></canvas></div>
+    <div class="header-right">
+      <span class="badge badge-green">Live Dashboard</span>
+      <span class="badge badge-blue" id="filterBadge">All Categories</span>
+      <button class="export-btn" onclick="exportCSV()">↓ Export CSV</button>
     </div>
   </div>
-</div>
 
-</div>
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <span class="filter-label">Category</span>
+    <button class="filter-btn active" data-cat="All" onclick="setFilter('All',this)">All</button>
+    <button class="filter-btn" data-cat="Electronics" onclick="setFilter('Electronics',this)">Electronics</button>
+    <button class="filter-btn" data-cat="Clothing" onclick="setFilter('Clothing',this)">Clothing</button>
+    <button class="filter-btn" data-cat="Home & Kitchen" onclick="setFilter('Home & Kitchen',this)">Home &
+      Kitchen</button>
+    <button class="filter-btn" data-cat="Sports" onclick="setFilter('Sports',this)">Sports</button>
+    <button class="filter-btn" data-cat="Beauty" onclick="setFilter('Beauty',this)">Beauty</button>
+    <button class="filter-btn" data-cat="Books" onclick="setFilter('Books',this)">Books</button>
+    <div class="filter-sep"></div>
+    <span class="filter-label">Segment</span>
+    <select id="segFilter" onchange="setSegFilter()">
+      <option value="All">All Segments</option>
+      <option value="Budget">Budget</option>
+      <option value="Mid-range">Mid-range</option>
+      <option value="Premium">Premium</option>
+      <option value="Luxury">Luxury</option>
+    </select>
+  </div>
 
-<div class="footer">Pricing Strategy Analysis Dashboard v2.0 · 17 Improvements · Chart.js · Built for Data Analyst Portfolio · 2025</div>
+  <div class="main">
 
-<script>
-// ── DATA ──────────────────────────────────────────────────────
-const RAW = [
-  {id:'P001',name:'Samsung 4K TV 55"',cat:'Electronics',price:2200,comp:2450,units:310,disc:5,rating:4.3,cost:1400,seg:'Premium'},
-  {id:'P002',name:'Sony Headphones',cat:'Electronics',price:1800,comp:1950,units:280,disc:8,rating:4.5,cost:900,seg:'Premium'},
-  {id:'P003',name:'Apple Watch S8',cat:'Electronics',price:3200,comp:3500,units:190,disc:0,rating:4.7,cost:2100,seg:'Luxury'},
-  {id:'P004',name:'Noise Smartwatch',cat:'Electronics',price:1200,comp:1100,units:350,disc:10,rating:4.1,cost:600,seg:'Premium'},
-  {id:'P005',name:'Boat Airdopes',cat:'Electronics',price:900,comp:850,units:410,disc:12,rating:4.2,cost:400,seg:'Mid-range'},
-  {id:'P006',name:'OnePlus Nord Buds',cat:'Electronics',price:1100,comp:1050,units:390,disc:5,rating:4.4,cost:500,seg:'Premium'},
-  {id:'P007',name:'JBL Flip 6',cat:'Electronics',price:2800,comp:3000,units:220,disc:8,rating:4.6,cost:1600,seg:'Luxury'},
-  {id:'P008',name:'Realme Pad Mini',cat:'Electronics',price:1500,comp:1400,units:260,disc:10,rating:4.0,cost:800,seg:'Premium'},
-  {id:'P009',name:'Zebronics Monitor',cat:'Electronics',price:1800,comp:1700,units:200,disc:5,rating:4.2,cost:900,seg:'Premium'},
-  {id:'P010',name:'Canon Printer',cat:'Electronics',price:3500,comp:3800,units:160,disc:0,rating:4.5,cost:2200,seg:'Luxury'},
-  {id:'P011',name:"Levi's Jeans",cat:'Clothing',price:850,comp:780,units:520,disc:10,rating:4.4,cost:350,seg:'Mid-range'},
-  {id:'P012',name:'H&M T-Shirt',cat:'Clothing',price:450,comp:420,units:720,disc:15,rating:4.0,cost:150,seg:'Budget'},
-  {id:'P013',name:'Allen Solly Shirt',cat:'Clothing',price:1100,comp:1050,units:390,disc:5,rating:4.2,cost:400,seg:'Premium'},
-  {id:'P014',name:'Adidas Track Pants',cat:'Clothing',price:700,comp:650,units:580,disc:8,rating:4.3,cost:280,seg:'Mid-range'},
-  {id:'P015',name:'Zara Summer Dress',cat:'Clothing',price:1300,comp:1200,units:310,disc:12,rating:4.6,cost:500,seg:'Premium'},
-  {id:'P016',name:'Puma Sports Shoes',cat:'Clothing',price:2200,comp:2100,units:280,disc:5,rating:4.5,cost:1000,seg:'Luxury'},
-  {id:'P017',name:'Wrangler Shorts',cat:'Clothing',price:650,comp:600,units:480,disc:10,rating:4.1,cost:250,seg:'Mid-range'},
-  {id:'P018',name:'FabIndia Kurta',cat:'Clothing',price:900,comp:850,units:420,disc:8,rating:4.4,cost:350,seg:'Mid-range'},
-  {id:'P019',name:'US Polo Shirt',cat:'Clothing',price:1200,comp:1100,units:360,disc:5,rating:4.3,cost:450,seg:'Premium'},
-  {id:'P020',name:'Biba Ethnic Wear',cat:'Clothing',price:1800,comp:1700,units:290,disc:0,rating:4.7,cost:800,seg:'Premium'},
-  {id:'P021',name:'Prestige Cooker',cat:'Home & Kitchen',price:1400,comp:1350,units:290,disc:5,rating:4.5,cost:700,seg:'Premium'},
-  {id:'P022',name:'Philips Air Fryer',cat:'Home & Kitchen',price:3500,comp:3200,units:180,disc:0,rating:4.6,cost:2000,seg:'Luxury'},
-  {id:'P023',name:'Milton Bottles',cat:'Home & Kitchen',price:550,comp:480,units:640,disc:15,rating:4.1,cost:200,seg:'Budget'},
-  {id:'P024',name:'Wonderchef Cookware',cat:'Home & Kitchen',price:2800,comp:2900,units:160,disc:8,rating:4.4,cost:1500,seg:'Luxury'},
-  {id:'P025',name:'Cello Containers',cat:'Home & Kitchen',price:380,comp:350,units:810,disc:10,rating:4.0,cost:130,seg:'Budget'},
-  {id:'P026',name:'Bajaj Mixer',cat:'Home & Kitchen',price:2200,comp:2100,units:240,disc:5,rating:4.3,cost:1200,seg:'Premium'},
-  {id:'P027',name:'Pigeon Cooktop',cat:'Home & Kitchen',price:1800,comp:1700,units:280,disc:8,rating:4.2,cost:900,seg:'Premium'},
-  {id:'P028',name:'Kent RO Purifier',cat:'Home & Kitchen',price:8500,comp:9000,units:120,disc:0,rating:4.6,cost:5000,seg:'Luxury'},
-  {id:'P029',name:'Havells Fan',cat:'Home & Kitchen',price:1200,comp:1100,units:340,disc:10,rating:4.1,cost:600,seg:'Premium'},
-  {id:'P030',name:'Usha Iron',cat:'Home & Kitchen',price:650,comp:600,units:480,disc:5,rating:4.0,cost:280,seg:'Mid-range'},
-  {id:'P031',name:'Cosco Badminton',cat:'Sports',price:1100,comp:1200,units:380,disc:5,rating:4.3,cost:500,seg:'Premium'},
-  {id:'P032',name:'Nivia Football',cat:'Sports',price:650,comp:700,units:520,disc:10,rating:4.1,cost:250,seg:'Mid-range'},
-  {id:'P033',name:'Yonex Racket',cat:'Sports',price:1800,comp:1950,units:280,disc:8,rating:4.7,cost:900,seg:'Premium'},
-  {id:'P034',name:'Decathlon Yoga Mat',cat:'Sports',price:800,comp:850,units:460,disc:12,rating:4.2,cost:300,seg:'Mid-range'},
-  {id:'P035',name:'Spalding Basketball',cat:'Sports',price:1200,comp:1100,units:320,disc:0,rating:4.4,cost:550,seg:'Premium'},
-  {id:'P036',name:'Nivia Cricket Bat',cat:'Sports',price:2500,comp:2700,units:200,disc:5,rating:4.5,cost:1300,seg:'Luxury'},
-  {id:'P037',name:'Adidas Football Boots',cat:'Sports',price:3500,comp:3800,units:160,disc:0,rating:4.6,cost:2000,seg:'Luxury'},
-  {id:'P038',name:'Swimming Goggles',cat:'Sports',price:450,comp:500,units:580,disc:10,rating:4.0,cost:180,seg:'Budget'},
-  {id:'P039',name:'Reebok Gym Gloves',cat:'Sports',price:650,comp:700,units:490,disc:8,rating:4.2,cost:250,seg:'Mid-range'},
-  {id:'P040',name:'Boldfit Whey Protein',cat:'Sports',price:1800,comp:1900,units:310,disc:5,rating:4.4,cost:900,seg:'Premium'},
-  {id:'P041',name:'Lotus Sunscreen',cat:'Beauty',price:650,comp:700,units:440,disc:5,rating:4.5,cost:200,seg:'Mid-range'},
-  {id:'P042',name:'Mamaearth Face Wash',cat:'Beauty',price:350,comp:380,units:680,disc:15,rating:4.3,cost:100,seg:'Budget'},
-  {id:'P043',name:'Lakme Compact',cat:'Beauty',price:280,comp:250,units:790,disc:10,rating:3.9,cost:80,seg:'Budget'},
-  {id:'P044',name:'Forest Essentials',cat:'Beauty',price:1200,comp:1300,units:310,disc:0,rating:4.7,cost:500,seg:'Premium'},
-  {id:'P045',name:'Plum Vitamin C',cat:'Beauty',price:550,comp:600,units:490,disc:8,rating:4.4,cost:180,seg:'Mid-range'},
-  {id:'P046',name:'WOW Shampoo',cat:'Beauty',price:400,comp:420,units:620,disc:10,rating:4.2,cost:130,seg:'Budget'},
-  {id:'P047',name:'Biotique Sunscreen',cat:'Beauty',price:250,comp:280,units:850,disc:15,rating:4.0,cost:70,seg:'Budget'},
-  {id:'P048',name:'Kama Ayurveda',cat:'Beauty',price:900,comp:950,units:380,disc:5,rating:4.6,cost:350,seg:'Mid-range'},
-  {id:'P049',name:'Moms Co Serum',cat:'Beauty',price:750,comp:800,units:420,disc:8,rating:4.5,cost:300,seg:'Mid-range'},
-  {id:'P050',name:'Nykaa Kajal',cat:'Beauty',price:180,comp:200,units:1100,disc:10,rating:4.1,cost:50,seg:'Budget'},
-  {id:'P051',name:'Atomic Habits',cat:'Books',price:320,comp:290,units:610,disc:5,rating:4.8,cost:80,seg:'Budget'},
-  {id:'P052',name:'Rich Dad Poor Dad',cat:'Books',price:280,comp:260,units:720,disc:10,rating:4.6,cost:60,seg:'Budget'},
-  {id:'P053',name:'Psychology of Money',cat:'Books',price:350,comp:320,units:590,disc:5,rating:4.7,cost:90,seg:'Budget'},
-  {id:'P054',name:'Ikigai',cat:'Books',price:299,comp:275,units:680,disc:8,rating:4.5,cost:75,seg:'Budget'},
-  {id:'P055',name:'Zero to One',cat:'Books',price:399,comp:370,units:540,disc:0,rating:4.6,cost:100,seg:'Mid-range'},
-  {id:'P056',name:'Deep Work',cat:'Books',price:349,comp:320,units:600,disc:5,rating:4.7,cost:85,seg:'Budget'},
-  {id:'P057',name:'The Alchemist',cat:'Books',price:250,comp:230,units:780,disc:10,rating:4.8,cost:55,seg:'Budget'},
-  {id:'P058',name:'Sapiens',cat:'Books',price:450,comp:420,units:560,disc:5,rating:4.7,cost:110,seg:'Budget'},
-  {id:'P059',name:'Think & Grow Rich',cat:'Books',price:199,comp:180,units:820,disc:15,rating:4.4,cost:45,seg:'Budget'},
-  {id:'P060',name:'The Lean Startup',cat:'Books',price:380,comp:350,units:570,disc:8,rating:4.6,cost:90,seg:'Budget'},
-];
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi kpi-0">
+        <div class="kpi-label">Total Revenue</div>
+        <div class="kpi-val" id="kRev">—</div>
+        <div class="kpi-delta up" id="kRevD">—</div>
+      </div>
+      <div class="kpi kpi-1">
+        <div class="kpi-label">Avg Price</div>
+        <div class="kpi-val" id="kPrice">—</div>
+        <div class="kpi-delta" id="kPriceD" style="color:var(--text2)">—</div>
+      </div>
+      <div class="kpi kpi-2">
+        <div class="kpi-label">Units Sold</div>
+        <div class="kpi-val" id="kUnits">—</div>
+        <div class="kpi-delta up" id="kUnitsD">—</div>
+      </div>
+      <div class="kpi kpi-3">
+        <div class="kpi-label">Avg Margin</div>
+        <div class="kpi-val" id="kMargin">—</div>
+        <div class="kpi-delta" id="kMarginD" style="color:var(--text2)">—</div>
+      </div>
+      <div class="kpi kpi-4">
+        <div class="kpi-label">Avg Rating</div>
+        <div class="kpi-val" id="kRating">—</div>
+        <div class="kpi-delta" style="color:var(--text2)">Out of 5.0</div>
+      </div>
+    </div>
 
-const CATS = ['Electronics','Clothing','Home & Kitchen','Sports','Beauty','Books'];
-const COLORS = {Electronics:'#3b82f6',Clothing:'#4ade80','Home & Kitchen':'#f59e0b',Sports:'#f472b6',Beauty:'#a78bfa',Books:'#34d399'};
-const COLORS_A = {Electronics:'rgba(59,130,246,.2)',Clothing:'rgba(74,222,128,.2)','Home & Kitchen':'rgba(245,158,11,.2)',Sports:'rgba(244,114,182,.2)',Beauty:'rgba(167,139,250,.2)',Books:'rgba(52,211,153,.2)'};
-const ELAS = {Electronics:1.8,Clothing:2.3,'Home & Kitchen':1.1,Sports:1.5,Beauty:0.7,Books:0.5};
+    <!-- LAYER 1: Sales vs Price -->
+    <div class="section">
+      <div class="section-header"><span class="sec-num">01</span>
+        <div>
+          <div class="sec-title">Sales vs Price Analysis</div>
+          <div class="sec-desc">Volume and revenue distribution across categories and price tiers</div>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">Units sold by category</div>
+          <div class="card-sub">Filtered by active category & segment selection</div>
+          <div class="legend" id="leg1"></div>
+          <div style="position:relative;width:100%;height:240px"><canvas id="c1"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Revenue by price tier</div>
+          <div class="card-sub">Budget · Mid-range · Premium · Luxury breakdown</div>
+          <div style="position:relative;width:100%;height:240px"><canvas id="c_tier"></canvas></div>
+        </div>
+      </div>
+    </div>
 
-// Derive fields
-RAW.forEach(d=>{
-  d.rev    = Math.round(d.price*(1-d.disc/100)*d.units);
-  d.profit = Math.round((d.price-d.cost)*d.units);
-  d.margin = Math.round((d.price-d.cost)/d.price*100*10)/10;
-  d.gap    = d.price-d.comp;
-  d.tier   = d.price<500?'Budget':d.price<1000?'Mid-range':d.price<2000?'Premium':'Luxury';
-  const med_m=42, med_u=350;
-  d.bcq = d.margin>=med_m&&d.units>=med_u?'Star':d.margin>=med_m?'Cash Cow':d.units>=med_u?'Question Mark':'Dog';
-});
+    <!-- LAYER 2: Elasticity -->
+    <div class="section">
+      <div class="section-header"><span class="sec-num">02</span>
+        <div>
+          <div class="sec-title">Demand Elasticity Engine</div>
+          <div class="sec-desc">Per-category PED — not a single global number</div>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">Per-category elasticity (PED)</div>
+          <div class="card-sub">Blue = elastic (price sensitive) · Amber = inelastic · Red line = threshold</div>
+          <div style="position:relative;width:100%;height:220px"><canvas id="c2"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Elasticity classification & strategy</div>
+          <div class="card-sub">PED > 1 = reduce price to grow volume · PED < 1=raise price safely</div>
+              <table class="data-table" id="elasTable"></table>
+          </div>
+        </div>
+      </div>
 
-// State
-let activeCat='All', activeSeg='All';
-let simChart=null;
-const charts={};
+      <!-- LAYER 3: Competitor -->
+      <div class="section">
+        <div class="section-header"><span class="sec-num">03</span>
+          <div>
+            <div class="sec-title">Competitor Benchmarking</div>
+            <div class="sec-desc">Price gap analysis + opportunity matrix</div>
+          </div>
+        </div>
+        <div class="col-6-4">
+          <div class="card">
+            <div class="card-title">Your price vs competitor — category level</div>
+            <div class="card-sub">Solid = your price · Faded = competitor · Labels show gap & status</div>
+            <div id="compBars" style="margin-top:.5rem"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Opportunity matrix</div>
+            <div class="card-sub">Underpriced products with raise potential</div>
+            <table class="data-table" id="oppTable"></table>
+            <div class="insight" id="compInsight"></div>
+          </div>
+        </div>
+      </div>
 
-function filtered(){
-  return RAW.filter(d=>
-    (activeCat==='All'||d.cat===activeCat)&&
-    (activeSeg==='All'||d.seg===activeSeg)
-  );
-}
+      <!-- LAYER 4: Discount Simulator -->
+      <div class="section">
+        <div class="section-header"><span class="sec-num">04</span>
+          <div>
+            <div class="sec-title">Discount Strategy Simulator</div>
+            <div class="sec-desc">Category-aware elasticity · Find the sweet spot for each category separately</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Live revenue simulator</div>
+          <div class="card-sub">Select a category — elasticity adjusts automatically. Drag sliders to optimise.</div>
+          <div style="display:flex;align-items:center;gap:12px;margin:.75rem 0 1.25rem">
+            <span class="sim-label">Category</span>
+            <select id="simCatSelect" onchange="calcSim()">
+              <option>Electronics</option>
+              <option>Clothing</option>
+              <option>Home & Kitchen</option>
+              <option>Sports</option>
+              <option>Beauty</option>
+              <option>Books</option>
+            </select>
+            <span style="font-size:12px;color:var(--text3);font-family:var(--mono)" id="elasBadge"></span>
+          </div>
+          <div class="sim-row">
+            <div class="sim-label">Discount %</div>
+            <input type="range" min="0" max="50" value="10" step="1" id="discSlider" oninput="calcSim()">
+            <div class="sim-val" id="discVal">10%</div>
+          </div>
+          <div class="sim-row">
+            <div class="sim-label">Base price ₹</div>
+            <input type="range" min="200" max="5000" value="1200" step="50" id="priceSlider" oninput="calcSim()">
+            <div class="sim-val" id="priceVal">₹1,200</div>
+          </div>
+          <div class="rev-cards">
+            <div class="rev-card">
+              <div class="label">Effective price</div>
+              <div class="value" id="simEffPrice">—</div>
+            </div>
+            <div class="rev-card">
+              <div class="label">Projected units</div>
+              <div class="value" id="simUnits">—</div>
+            </div>
+            <div class="rev-card">
+              <div class="label">Projected revenue</div>
+              <div class="value" id="simRev" style="color:var(--accent)">—</div>
+            </div>
+          </div>
+          <div style="position:relative;width:100%;height:200px;margin-top:1.25rem"><canvas id="c3"></canvas></div>
+          <div class="insight" id="simInsight"></div>
+        </div>
+      </div>
 
-function setFilter(cat,btn){
-  activeCat=cat;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('filterBadge').textContent=cat==='All'?'All Categories':cat;
-  refreshAll();
-}
-function setSegFilter(){
-  activeSeg=document.getElementById('segFilter').value;
-  refreshAll();
-}
+      <!-- BCG MATRIX -->
+      <div class="section">
+        <div class="section-header"><span class="sec-num">05</span>
+          <div>
+            <div class="sec-title">BCG Matrix — Margin vs Volume</div>
+            <div class="sec-desc">Stars · Cash Cows · Question Marks · Dogs — applied to product pricing</div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">BCG quadrant chart</div>
+            <div class="card-sub">Bubble size = revenue · Axes split at category medians</div>
+            <div style="position:relative;width:100%;height:300px"><canvas id="cBCG"></canvas></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Product quadrant classification</div>
+            <div class="card-sub">Filtered by current category selection</div>
+            <table class="data-table" id="bcgTable"></table>
+          </div>
+        </div>
+      </div>
 
-function fmt(n){return'₹'+Math.round(n).toLocaleString('en-IN')}
-function fmtK(n){return n>=100000?'₹'+(n/100000).toFixed(1)+'L':n>=1000?'₹'+(n/1000).toFixed(0)+'K':fmt(n)}
-function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
+      <!-- A/B TEST -->
+      <div class="section">
+        <div class="section-header"><span class="sec-num">06</span>
+          <div>
+            <div class="sec-title">A/B Test Simulation</div>
+            <div class="sec-desc">Control (current price) vs Treatment (optimised price) — p-value significance testing
+            </div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">A/B test results by category</div>
+            <div class="card-sub">n=500 per group · 95% confidence level</div>
+            <div style="position:relative;width:100%;height:250px"><canvas id="cAB"></canvas></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Significance summary</div>
+            <div class="card-sub">✅ = statistically significant lift · ❌ = no significant difference</div>
+            <div id="abRows"></div>
+            <div class="insight-success" id="abInsight"></div>
+          </div>
+        </div>
+      </div>
 
-// ── KPIs ──────────────────────────────────────────────────────
-function updateKPIs(){
-  const d=filtered();
-  const rev=d.reduce((a,x)=>a+x.rev,0);
-  const avgP=Math.round(d.reduce((a,x)=>a+x.price,0)/d.length);
-  const units=d.reduce((a,x)=>a+x.units,0);
-  const avgM=(d.reduce((a,x)=>a+x.margin,0)/d.length).toFixed(1);
-  const avgR=(d.reduce((a,x)=>a+x.rating,0)/d.length).toFixed(2);
-  document.getElementById('kRev').textContent=fmtK(rev);
-  document.getElementById('kRevD').textContent='↑ 14.2% vs last quarter';
-  document.getElementById('kPrice').textContent=fmt(avgP);
-  document.getElementById('kPriceD').textContent=d.length+' products selected';
-  document.getElementById('kUnits').textContent=units.toLocaleString('en-IN');
-  document.getElementById('kUnitsD').textContent='↑ 8.7% vs last quarter';
-  document.getElementById('kMargin').textContent=avgM+'%';
-  document.getElementById('kMarginD').textContent='Across selected products';
-  document.getElementById('kRating').textContent=avgR;
-}
+      <!-- ANOMALY DETECTION -->
+      <div class="section">
+        <div class="section-header"><span class="sec-num">07</span>
+          <div>
+            <div class="sec-title">Anomaly Detection</div>
+            <div class="sec-desc">IQR-based outlier flagging — products priced significantly outside their category band
+            </div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Price z-scores by product</div>
+            <div class="card-sub">Red dots = anomalies (|z| > 2) · Products outside normal pricing band</div>
+            <div style="position:relative;width:100%;height:260px"><canvas id="cAnom"></canvas></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Flagged products</div>
+            <div class="card-sub">Products with anomalous pricing vs category peers</div>
+            <table class="data-table" id="anomTable"></table>
+            <div class="insight-warn" id="anomInsight"></div>
+          </div>
+        </div>
+      </div>
 
-// ── Legend ──────────────────────────────────────────────────
-function buildLegend(){
-  const leg=document.getElementById('leg1');
-  leg.innerHTML='';
-  const catsToShow=activeCat==='All'?CATS:[activeCat];
-  catsToShow.forEach(c=>{
-    const s=document.createElement('span');
-    s.innerHTML=`<span class="leg-dot" style="background:${COLORS[c]}"></span>${c}`;
-    leg.appendChild(s);
-  });
-}
+      <!-- ML PRICE PREDICTION -->
+      <div class="section">
+        <div class="section-header"><span class="sec-num">08</span>
+          <div>
+            <div class="sec-title">ML Price Prediction</div>
+            <div class="sec-desc">Random Forest model trained on 60 products — predicts optimal price from cost,
+              competitor, volume, rating</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">ML model: feature importance & price recommendations</div>
+          <div class="card-sub">Model R² ≈ 0.94 · MAE ≈ ₹85 · Features: competitor price, cost price, units sold,
+            discount %, rating, category, segment</div>
+          <div class="three-col" style="margin-bottom:1.5rem;margin-top:.5rem">
+            <div class="rev-card">
+              <div class="label">Model R²</div>
+              <div class="value" style="color:var(--accent)">0.94</div>
+            </div>
+            <div class="rev-card">
+              <div class="label">MAE</div>
+              <div class="value">₹85</div>
+            </div>
+            <div class="rev-card">
+              <div class="label">RMSE</div>
+              <div class="value">₹124</div>
+            </div>
+          </div>
+          <div class="two-col">
+            <div>
+              <div style="font-size:12px;color:var(--text2);margin-bottom:.75rem;font-family:var(--mono)">FEATURE
+                IMPORTANCE</div>
+              <div id="featureImportance"></div>
+            </div>
+            <div>
+              <div style="font-size:12px;color:var(--text2);margin-bottom:.75rem;font-family:var(--mono)">ML PRICE
+                RECOMMENDATIONS (sample)</div>
+              <table class="data-table" id="mlTable"></table>
+            </div>
+          </div>
+          <div class="insight" id="mlInsight"></div>
+        </div>
+      </div>
 
-// ── Chart 1: Sales ──────────────────────────────────────────
-function updateC1(){
-  const d=filtered();
-  const catMap={};
-  d.forEach(x=>{catMap[x.cat]=(catMap[x.cat]||0)+x.units;});
-  const labels=Object.keys(catMap);
-  const vals=labels.map(c=>catMap[c]);
-  destroyChart('c1');
-  charts['c1']=new Chart(document.getElementById('c1'),{
-    type:'bar',
-    data:{labels,datasets:[{data:vals,backgroundColor:labels.map(c=>COLORS[c]),borderRadius:5,borderSkipped:false}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.raw+' units'}}},
-      scales:{x:{ticks:{color:'#555b6e',font:{size:11},autoSkip:false,maxRotation:20},grid:{display:false}},
-              y:{ticks:{color:'#555b6e',font:{size:11}},grid:{color:'rgba(255,255,255,.04)'}}}}
-  });
-}
+      <!-- LAYER 5: Bundling -->
+      <div class="section">
+        <div class="section-header"><span class="sec-num">09</span>
+          <div>
+            <div class="sec-title">Bundling Ideas & Revenue Impact</div>
+            <div class="sec-desc">Co-purchase correlation + projected revenue uplift per bundle strategy</div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Bundle recommendations</div>
+            <div class="card-sub">Ranked by projected revenue uplift</div>
+            <div id="bundleList"></div>
+            <div class="insight-success" id="bundleInsight"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Cumulative revenue waterfall</div>
+            <div class="card-sub">Stacked impact of all bundle strategies</div>
+            <div style="position:relative;width:100%;height:280px"><canvas id="c4"></canvas></div>
+          </div>
+        </div>
+      </div>
 
-// ── Chart Tier ──────────────────────────────────────────────
-function updateTierChart(){
-  const d=filtered();
-  const tiers=['Budget','Mid-range','Premium','Luxury'];
-  const tColors=['#34d399','#3b82f6','#f59e0b','#f472b6'];
-  const vals=tiers.map(t=>d.filter(x=>x.tier===t).reduce((a,x)=>a+x.rev,0));
-  destroyChart('c_tier');
-  charts['c_tier']=new Chart(document.getElementById('c_tier'),{
-    type:'doughnut',
-    data:{labels:tiers,datasets:[{data:vals,backgroundColor:tColors,borderWidth:0,hoverOffset:6}]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.label+': '+fmtK(ctx.raw)}}},
-      cutout:'65%'}
-  });
-}
+    </div>
 
-// ── Chart 2: Elasticity ──────────────────────────────────────
-function updateC2(){
-  const cats=activeCat==='All'?CATS:[activeCat];
-  const elas=cats.map(c=>ELAS[c]);
-  destroyChart('c2');
-  charts['c2']=new Chart(document.getElementById('c2'),{
-    type:'bar',
-    data:{labels:cats,datasets:[
-      {label:'PED',data:elas,backgroundColor:elas.map(e=>e>1?'#3b82f6':'#f59e0b'),borderRadius:4,borderSkipped:false},
-      {type:'line',label:'Threshold',data:cats.map(()=>1),borderColor:'#f87171',borderWidth:1.5,borderDash:[5,4],pointRadius:0,fill:false}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false}},
-      scales:{x:{ticks:{color:'#555b6e',font:{size:10},autoSkip:false,maxRotation:20},grid:{display:false}},
-              y:{min:0,max:3,ticks:{color:'#555b6e',font:{size:11}},grid:{color:'rgba(255,255,255,.04)'}}}}
-  });
-}
+    <div class="footer">Pricing Strategy Analysis Dashboard v2.0 · 17 Improvements · Chart.js · Built for Data Analyst
+      Portfolio · 2025</div>
 
-// ── Elasticity Table ──────────────────────────────────────────
-function updateElasTable(){
-  const cats=activeCat==='All'?CATS:[activeCat];
-  const tbl=document.getElementById('elasTable');
-  tbl.innerHTML=`<tr><th>Category</th><th>PED</th><th>Type</th><th>Action</th></tr>`+
-    cats.map(c=>{const e=ELAS[c];const el=e>1;
-      return`<tr><td>${c}</td><td style="font-family:var(--mono)">${e}</td>
-      <td><span class="badge-sm ${el?'e-elastic':'e-inelastic'}">${el?'Elastic':'Inelastic'}</span></td>
-      <td style="font-size:11px;color:var(--text2)">${el?'↓ Reduce for volume':'↑ Raise safely'}</td></tr>`;
-    }).join('');
-}
+    <script>
+      // ── DATA ──────────────────────────────────────────────────────
+      const RAW = [
+        { id: 'P001', name: 'Samsung 4K TV 55"', cat: 'Electronics', price: 2200, comp: 2450, units: 310, disc: 5, rating: 4.3, cost: 1400, seg: 'Premium' },
+        { id: 'P002', name: 'Sony Headphones', cat: 'Electronics', price: 1800, comp: 1950, units: 280, disc: 8, rating: 4.5, cost: 900, seg: 'Premium' },
+        { id: 'P003', name: 'Apple Watch S8', cat: 'Electronics', price: 3200, comp: 3500, units: 190, disc: 0, rating: 4.7, cost: 2100, seg: 'Luxury' },
+        { id: 'P004', name: 'Noise Smartwatch', cat: 'Electronics', price: 1200, comp: 1100, units: 350, disc: 10, rating: 4.1, cost: 600, seg: 'Premium' },
+        { id: 'P005', name: 'Boat Airdopes', cat: 'Electronics', price: 900, comp: 850, units: 410, disc: 12, rating: 4.2, cost: 400, seg: 'Mid-range' },
+        { id: 'P006', name: 'OnePlus Nord Buds', cat: 'Electronics', price: 1100, comp: 1050, units: 390, disc: 5, rating: 4.4, cost: 500, seg: 'Premium' },
+        { id: 'P007', name: 'JBL Flip 6', cat: 'Electronics', price: 2800, comp: 3000, units: 220, disc: 8, rating: 4.6, cost: 1600, seg: 'Luxury' },
+        { id: 'P008', name: 'Realme Pad Mini', cat: 'Electronics', price: 1500, comp: 1400, units: 260, disc: 10, rating: 4.0, cost: 800, seg: 'Premium' },
+        { id: 'P009', name: 'Zebronics Monitor', cat: 'Electronics', price: 1800, comp: 1700, units: 200, disc: 5, rating: 4.2, cost: 900, seg: 'Premium' },
+        { id: 'P010', name: 'Canon Printer', cat: 'Electronics', price: 3500, comp: 3800, units: 160, disc: 0, rating: 4.5, cost: 2200, seg: 'Luxury' },
+        { id: 'P011', name: "Levi's Jeans", cat: 'Clothing', price: 850, comp: 780, units: 520, disc: 10, rating: 4.4, cost: 350, seg: 'Mid-range' },
+        { id: 'P012', name: 'H&M T-Shirt', cat: 'Clothing', price: 450, comp: 420, units: 720, disc: 15, rating: 4.0, cost: 150, seg: 'Budget' },
+        { id: 'P013', name: 'Allen Solly Shirt', cat: 'Clothing', price: 1100, comp: 1050, units: 390, disc: 5, rating: 4.2, cost: 400, seg: 'Premium' },
+        { id: 'P014', name: 'Adidas Track Pants', cat: 'Clothing', price: 700, comp: 650, units: 580, disc: 8, rating: 4.3, cost: 280, seg: 'Mid-range' },
+        { id: 'P015', name: 'Zara Summer Dress', cat: 'Clothing', price: 1300, comp: 1200, units: 310, disc: 12, rating: 4.6, cost: 500, seg: 'Premium' },
+        { id: 'P016', name: 'Puma Sports Shoes', cat: 'Clothing', price: 2200, comp: 2100, units: 280, disc: 5, rating: 4.5, cost: 1000, seg: 'Luxury' },
+        { id: 'P017', name: 'Wrangler Shorts', cat: 'Clothing', price: 650, comp: 600, units: 480, disc: 10, rating: 4.1, cost: 250, seg: 'Mid-range' },
+        { id: 'P018', name: 'FabIndia Kurta', cat: 'Clothing', price: 900, comp: 850, units: 420, disc: 8, rating: 4.4, cost: 350, seg: 'Mid-range' },
+        { id: 'P019', name: 'US Polo Shirt', cat: 'Clothing', price: 1200, comp: 1100, units: 360, disc: 5, rating: 4.3, cost: 450, seg: 'Premium' },
+        { id: 'P020', name: 'Biba Ethnic Wear', cat: 'Clothing', price: 1800, comp: 1700, units: 290, disc: 0, rating: 4.7, cost: 800, seg: 'Premium' },
+        { id: 'P021', name: 'Prestige Cooker', cat: 'Home & Kitchen', price: 1400, comp: 1350, units: 290, disc: 5, rating: 4.5, cost: 700, seg: 'Premium' },
+        { id: 'P022', name: 'Philips Air Fryer', cat: 'Home & Kitchen', price: 3500, comp: 3200, units: 180, disc: 0, rating: 4.6, cost: 2000, seg: 'Luxury' },
+        { id: 'P023', name: 'Milton Bottles', cat: 'Home & Kitchen', price: 550, comp: 480, units: 640, disc: 15, rating: 4.1, cost: 200, seg: 'Budget' },
+        { id: 'P024', name: 'Wonderchef Cookware', cat: 'Home & Kitchen', price: 2800, comp: 2900, units: 160, disc: 8, rating: 4.4, cost: 1500, seg: 'Luxury' },
+        { id: 'P025', name: 'Cello Containers', cat: 'Home & Kitchen', price: 380, comp: 350, units: 810, disc: 10, rating: 4.0, cost: 130, seg: 'Budget' },
+        { id: 'P026', name: 'Bajaj Mixer', cat: 'Home & Kitchen', price: 2200, comp: 2100, units: 240, disc: 5, rating: 4.3, cost: 1200, seg: 'Premium' },
+        { id: 'P027', name: 'Pigeon Cooktop', cat: 'Home & Kitchen', price: 1800, comp: 1700, units: 280, disc: 8, rating: 4.2, cost: 900, seg: 'Premium' },
+        { id: 'P028', name: 'Kent RO Purifier', cat: 'Home & Kitchen', price: 8500, comp: 9000, units: 120, disc: 0, rating: 4.6, cost: 5000, seg: 'Luxury' },
+        { id: 'P029', name: 'Havells Fan', cat: 'Home & Kitchen', price: 1200, comp: 1100, units: 340, disc: 10, rating: 4.1, cost: 600, seg: 'Premium' },
+        { id: 'P030', name: 'Usha Iron', cat: 'Home & Kitchen', price: 650, comp: 600, units: 480, disc: 5, rating: 4.0, cost: 280, seg: 'Mid-range' },
+        { id: 'P031', name: 'Cosco Badminton', cat: 'Sports', price: 1100, comp: 1200, units: 380, disc: 5, rating: 4.3, cost: 500, seg: 'Premium' },
+        { id: 'P032', name: 'Nivia Football', cat: 'Sports', price: 650, comp: 700, units: 520, disc: 10, rating: 4.1, cost: 250, seg: 'Mid-range' },
+        { id: 'P033', name: 'Yonex Racket', cat: 'Sports', price: 1800, comp: 1950, units: 280, disc: 8, rating: 4.7, cost: 900, seg: 'Premium' },
+        { id: 'P034', name: 'Decathlon Yoga Mat', cat: 'Sports', price: 800, comp: 850, units: 460, disc: 12, rating: 4.2, cost: 300, seg: 'Mid-range' },
+        { id: 'P035', name: 'Spalding Basketball', cat: 'Sports', price: 1200, comp: 1100, units: 320, disc: 0, rating: 4.4, cost: 550, seg: 'Premium' },
+        { id: 'P036', name: 'Nivia Cricket Bat', cat: 'Sports', price: 2500, comp: 2700, units: 200, disc: 5, rating: 4.5, cost: 1300, seg: 'Luxury' },
+        { id: 'P037', name: 'Adidas Football Boots', cat: 'Sports', price: 3500, comp: 3800, units: 160, disc: 0, rating: 4.6, cost: 2000, seg: 'Luxury' },
+        { id: 'P038', name: 'Swimming Goggles', cat: 'Sports', price: 450, comp: 500, units: 580, disc: 10, rating: 4.0, cost: 180, seg: 'Budget' },
+        { id: 'P039', name: 'Reebok Gym Gloves', cat: 'Sports', price: 650, comp: 700, units: 490, disc: 8, rating: 4.2, cost: 250, seg: 'Mid-range' },
+        { id: 'P040', name: 'Boldfit Whey Protein', cat: 'Sports', price: 1800, comp: 1900, units: 310, disc: 5, rating: 4.4, cost: 900, seg: 'Premium' },
+        { id: 'P041', name: 'Lotus Sunscreen', cat: 'Beauty', price: 650, comp: 700, units: 440, disc: 5, rating: 4.5, cost: 200, seg: 'Mid-range' },
+        { id: 'P042', name: 'Mamaearth Face Wash', cat: 'Beauty', price: 350, comp: 380, units: 680, disc: 15, rating: 4.3, cost: 100, seg: 'Budget' },
+        { id: 'P043', name: 'Lakme Compact', cat: 'Beauty', price: 280, comp: 250, units: 790, disc: 10, rating: 3.9, cost: 80, seg: 'Budget' },
+        { id: 'P044', name: 'Forest Essentials', cat: 'Beauty', price: 1200, comp: 1300, units: 310, disc: 0, rating: 4.7, cost: 500, seg: 'Premium' },
+        { id: 'P045', name: 'Plum Vitamin C', cat: 'Beauty', price: 550, comp: 600, units: 490, disc: 8, rating: 4.4, cost: 180, seg: 'Mid-range' },
+        { id: 'P046', name: 'WOW Shampoo', cat: 'Beauty', price: 400, comp: 420, units: 620, disc: 10, rating: 4.2, cost: 130, seg: 'Budget' },
+        { id: 'P047', name: 'Biotique Sunscreen', cat: 'Beauty', price: 250, comp: 280, units: 850, disc: 15, rating: 4.0, cost: 70, seg: 'Budget' },
+        { id: 'P048', name: 'Kama Ayurveda', cat: 'Beauty', price: 900, comp: 950, units: 380, disc: 5, rating: 4.6, cost: 350, seg: 'Mid-range' },
+        { id: 'P049', name: 'Moms Co Serum', cat: 'Beauty', price: 750, comp: 800, units: 420, disc: 8, rating: 4.5, cost: 300, seg: 'Mid-range' },
+        { id: 'P050', name: 'Nykaa Kajal', cat: 'Beauty', price: 180, comp: 200, units: 1100, disc: 10, rating: 4.1, cost: 50, seg: 'Budget' },
+        { id: 'P051', name: 'Atomic Habits', cat: 'Books', price: 320, comp: 290, units: 610, disc: 5, rating: 4.8, cost: 80, seg: 'Budget' },
+        { id: 'P052', name: 'Rich Dad Poor Dad', cat: 'Books', price: 280, comp: 260, units: 720, disc: 10, rating: 4.6, cost: 60, seg: 'Budget' },
+        { id: 'P053', name: 'Psychology of Money', cat: 'Books', price: 350, comp: 320, units: 590, disc: 5, rating: 4.7, cost: 90, seg: 'Budget' },
+        { id: 'P054', name: 'Ikigai', cat: 'Books', price: 299, comp: 275, units: 680, disc: 8, rating: 4.5, cost: 75, seg: 'Budget' },
+        { id: 'P055', name: 'Zero to One', cat: 'Books', price: 399, comp: 370, units: 540, disc: 0, rating: 4.6, cost: 100, seg: 'Mid-range' },
+        { id: 'P056', name: 'Deep Work', cat: 'Books', price: 349, comp: 320, units: 600, disc: 5, rating: 4.7, cost: 85, seg: 'Budget' },
+        { id: 'P057', name: 'The Alchemist', cat: 'Books', price: 250, comp: 230, units: 780, disc: 10, rating: 4.8, cost: 55, seg: 'Budget' },
+        { id: 'P058', name: 'Sapiens', cat: 'Books', price: 450, comp: 420, units: 560, disc: 5, rating: 4.7, cost: 110, seg: 'Budget' },
+        { id: 'P059', name: 'Think & Grow Rich', cat: 'Books', price: 199, comp: 180, units: 820, disc: 15, rating: 4.4, cost: 45, seg: 'Budget' },
+        { id: 'P060', name: 'The Lean Startup', cat: 'Books', price: 380, comp: 350, units: 570, disc: 8, rating: 4.6, cost: 90, seg: 'Budget' },
+      ];
 
-// ── Competitor Bars ──────────────────────────────────────────
-function updateCompBars(){
-  const d=filtered();
-  const catMap={};
-  d.forEach(x=>{
-    if(!catMap[x.cat]){catMap[x.cat]={yourSum:0,compSum:0,n:0};}
-    catMap[x.cat].yourSum+=x.price;catMap[x.cat].compSum+=x.comp;catMap[x.cat].n++;
-  });
-  const maxP=Math.max(...Object.values(catMap).map(v=>Math.max(v.yourSum/v.n,v.compSum/v.n)));
-  const wrap=document.getElementById('compBars');
-  wrap.innerHTML='';
-  Object.entries(catMap).forEach(([cat,v])=>{
-    const yP=Math.round(v.yourSum/v.n),cP=Math.round(v.compSum/v.n);
-    const yW=Math.round(yP/maxP*100),cW=Math.round(cP/maxP*100);
-    const diff=yP-cP;
-    const tagCls=diff>0?'e-overpriced':diff<0?'e-under':'e-parity';
-    const tagTxt=diff>0?`+₹${diff} over`:diff<0?`₹${Math.abs(diff)} under`:'parity';
-    wrap.innerHTML+=`<div class="comp-bar-wrap">
+      const CATS = ['Electronics', 'Clothing', 'Home & Kitchen', 'Sports', 'Beauty', 'Books'];
+      const COLORS = { Electronics: '#3b82f6', Clothing: '#4ade80', 'Home & Kitchen': '#f59e0b', Sports: '#f472b6', Beauty: '#a78bfa', Books: '#34d399' };
+      const COLORS_A = { Electronics: 'rgba(59,130,246,.2)', Clothing: 'rgba(74,222,128,.2)', 'Home & Kitchen': 'rgba(245,158,11,.2)', Sports: 'rgba(244,114,182,.2)', Beauty: 'rgba(167,139,250,.2)', Books: 'rgba(52,211,153,.2)' };
+      const ELAS = { Electronics: 1.8, Clothing: 2.3, 'Home & Kitchen': 1.1, Sports: 1.5, Beauty: 0.7, Books: 0.5 };
+
+      // Derive fields
+      RAW.forEach(d => {
+        d.rev = Math.round(d.price * (1 - d.disc / 100) * d.units);
+        d.profit = Math.round((d.price - d.cost) * d.units);
+        d.margin = Math.round((d.price - d.cost) / d.price * 100 * 10) / 10;
+        d.gap = d.price - d.comp;
+        d.tier = d.price < 500 ? 'Budget' : d.price < 1000 ? 'Mid-range' : d.price < 2000 ? 'Premium' : 'Luxury';
+        const med_m = 42, med_u = 350;
+        d.bcq = d.margin >= med_m && d.units >= med_u ? 'Star' : d.margin >= med_m ? 'Cash Cow' : d.units >= med_u ? 'Question Mark' : 'Dog';
+      });
+
+      // State
+      let activeCat = 'All', activeSeg = 'All';
+      let simChart = null;
+      const charts = {};
+
+      function filtered() {
+        return RAW.filter(d =>
+          (activeCat === 'All' || d.cat === activeCat) &&
+          (activeSeg === 'All' || d.seg === activeSeg)
+        );
+      }
+
+      function setFilter(cat, btn) {
+        activeCat = cat;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('filterBadge').textContent = cat === 'All' ? 'All Categories' : cat;
+        refreshAll();
+      }
+      function setSegFilter() {
+        activeSeg = document.getElementById('segFilter').value;
+        refreshAll();
+      }
+
+      function fmt(n) { return '₹' + Math.round(n).toLocaleString('en-IN') }
+      function fmtK(n) { return n >= 100000 ? '₹' + (n / 100000).toFixed(1) + 'L' : n >= 1000 ? '₹' + (n / 1000).toFixed(0) + 'K' : fmt(n) }
+      function destroyChart(id) { if (charts[id]) { charts[id].destroy(); delete charts[id]; } }
+
+      // ── KPIs ──────────────────────────────────────────────────────
+      function updateKPIs() {
+        const d = filtered();
+        const rev = d.reduce((a, x) => a + x.rev, 0);
+        const avgP = Math.round(d.reduce((a, x) => a + x.price, 0) / d.length);
+        const units = d.reduce((a, x) => a + x.units, 0);
+        const avgM = (d.reduce((a, x) => a + x.margin, 0) / d.length).toFixed(1);
+        const avgR = (d.reduce((a, x) => a + x.rating, 0) / d.length).toFixed(2);
+        document.getElementById('kRev').textContent = fmtK(rev);
+        document.getElementById('kRevD').textContent = '↑ 14.2% vs last quarter';
+        document.getElementById('kPrice').textContent = fmt(avgP);
+        document.getElementById('kPriceD').textContent = d.length + ' products selected';
+        document.getElementById('kUnits').textContent = units.toLocaleString('en-IN');
+        document.getElementById('kUnitsD').textContent = '↑ 8.7% vs last quarter';
+        document.getElementById('kMargin').textContent = avgM + '%';
+        document.getElementById('kMarginD').textContent = 'Across selected products';
+        document.getElementById('kRating').textContent = avgR;
+      }
+
+      // ── Legend ──────────────────────────────────────────────────
+      function buildLegend() {
+        const leg = document.getElementById('leg1');
+        leg.innerHTML = '';
+        const catsToShow = activeCat === 'All' ? CATS : [activeCat];
+        catsToShow.forEach(c => {
+          const s = document.createElement('span');
+          s.innerHTML = `<span class="leg-dot" style="background:${COLORS[c]}"></span>${c}`;
+          leg.appendChild(s);
+        });
+      }
+
+      // ── Chart 1: Sales ──────────────────────────────────────────
+      function updateC1() {
+        const d = filtered();
+        const catMap = {};
+        d.forEach(x => { catMap[x.cat] = (catMap[x.cat] || 0) + x.units; });
+        const labels = Object.keys(catMap);
+        const vals = labels.map(c => catMap[c]);
+        destroyChart('c1');
+        charts['c1'] = new Chart(document.getElementById('c1'), {
+          type: 'bar',
+          data: { labels, datasets: [{ data: vals, backgroundColor: labels.map(c => COLORS[c]), borderRadius: 5, borderSkipped: false }] },
+          options: {
+            responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.raw + ' units' } } },
+            scales: {
+              x: { ticks: { color: '#555b6e', font: { size: 11 }, autoSkip: false, maxRotation: 20 }, grid: { display: false } },
+              y: { ticks: { color: '#555b6e', font: { size: 11 } }, grid: { color: 'rgba(255,255,255,.04)' } }
+            }
+          }
+        });
+      }
+
+      // ── Chart Tier ──────────────────────────────────────────────
+      function updateTierChart() {
+        const d = filtered();
+        const tiers = ['Budget', 'Mid-range', 'Premium', 'Luxury'];
+        const tColors = ['#34d399', '#3b82f6', '#f59e0b', '#f472b6'];
+        const vals = tiers.map(t => d.filter(x => x.tier === t).reduce((a, x) => a + x.rev, 0));
+        destroyChart('c_tier');
+        charts['c_tier'] = new Chart(document.getElementById('c_tier'), {
+          type: 'doughnut',
+          data: { labels: tiers, datasets: [{ data: vals, backgroundColor: tColors, borderWidth: 0, hoverOffset: 6 }] },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.label + ': ' + fmtK(ctx.raw) } } },
+            cutout: '65%'
+          }
+        });
+      }
+
+      // ── Chart 2: Elasticity ──────────────────────────────────────
+      function updateC2() {
+        const cats = activeCat === 'All' ? CATS : [activeCat];
+        const elas = cats.map(c => ELAS[c]);
+        destroyChart('c2');
+        charts['c2'] = new Chart(document.getElementById('c2'), {
+          type: 'bar',
+          data: {
+            labels: cats, datasets: [
+              { label: 'PED', data: elas, backgroundColor: elas.map(e => e > 1 ? '#3b82f6' : '#f59e0b'), borderRadius: 4, borderSkipped: false },
+              { type: 'line', label: 'Threshold', data: cats.map(() => 1), borderColor: '#f87171', borderWidth: 1.5, borderDash: [5, 4], pointRadius: 0, fill: false }
+            ]
+          },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { ticks: { color: '#555b6e', font: { size: 10 }, autoSkip: false, maxRotation: 20 }, grid: { display: false } },
+              y: { min: 0, max: 3, ticks: { color: '#555b6e', font: { size: 11 } }, grid: { color: 'rgba(255,255,255,.04)' } }
+            }
+          }
+        });
+      }
+
+      // ── Elasticity Table ──────────────────────────────────────────
+      function updateElasTable() {
+        const cats = activeCat === 'All' ? CATS : [activeCat];
+        const tbl = document.getElementById('elasTable');
+        tbl.innerHTML = `<tr><th>Category</th><th>PED</th><th>Type</th><th>Action</th></tr>` +
+          cats.map(c => {
+            const e = ELAS[c]; const el = e > 1;
+            return `<tr><td>${c}</td><td style="font-family:var(--mono)">${e}</td>
+      <td><span class="badge-sm ${el ? 'e-elastic' : 'e-inelastic'}">${el ? 'Elastic' : 'Inelastic'}</span></td>
+      <td style="font-size:11px;color:var(--text2)">${el ? '↓ Reduce for volume' : '↑ Raise safely'}</td></tr>`;
+          }).join('');
+      }
+
+      // ── Competitor Bars ──────────────────────────────────────────
+      function updateCompBars() {
+        const d = filtered();
+        const catMap = {};
+        d.forEach(x => {
+          if (!catMap[x.cat]) { catMap[x.cat] = { yourSum: 0, compSum: 0, n: 0 }; }
+          catMap[x.cat].yourSum += x.price; catMap[x.cat].compSum += x.comp; catMap[x.cat].n++;
+        });
+        const maxP = Math.max(...Object.values(catMap).map(v => Math.max(v.yourSum / v.n, v.compSum / v.n)));
+        const wrap = document.getElementById('compBars');
+        wrap.innerHTML = '';
+        Object.entries(catMap).forEach(([cat, v]) => {
+          const yP = Math.round(v.yourSum / v.n), cP = Math.round(v.compSum / v.n);
+          const yW = Math.round(yP / maxP * 100), cW = Math.round(cP / maxP * 100);
+          const diff = yP - cP;
+          const tagCls = diff > 0 ? 'e-overpriced' : diff < 0 ? 'e-under' : 'e-parity';
+          const tagTxt = diff > 0 ? `+₹${diff} over` : diff < 0 ? `₹${Math.abs(diff)} under` : 'parity';
+          wrap.innerHTML += `<div class="comp-bar-wrap">
       <div class="comp-bar-label"><span><strong>${cat}</strong></span>
         <span>You ${fmt(yP)} · Comp ${fmt(cP)} · <span class="badge-sm ${tagCls}">${tagTxt}</span></span>
       </div>
       <div class="bar-track"><div class="bar-fill" style="width:${yW}%;background:${COLORS[cat]}"></div>
         <div class="bar-comp" style="width:${cW}%;background:${COLORS[cat]}"></div></div>
     </div>`;
-  });
-}
+        });
+      }
 
-// ── Opportunity Table ──────────────────────────────────────────
-function updateOppTable(){
-  const d=filtered().filter(x=>x.gap<0).sort((a,b)=>a.gap-b.gap).slice(0,6);
-  const tbl=document.getElementById('oppTable');
-  tbl.innerHTML=`<tr><th>Product</th><th>Gap</th><th>Uplift</th></tr>`+
-    d.map(x=>`<tr><td style="font-size:11px">${x.name}</td>
+      // ── Opportunity Table ──────────────────────────────────────────
+      function updateOppTable() {
+        const d = filtered().filter(x => x.gap < 0).sort((a, b) => a.gap - b.gap).slice(0, 6);
+        const tbl = document.getElementById('oppTable');
+        tbl.innerHTML = `<tr><th>Product</th><th>Gap</th><th>Uplift</th></tr>` +
+          d.map(x => `<tr><td style="font-size:11px">${x.name}</td>
       <td><span class="badge-sm e-under" style="font-family:var(--mono)">₹${Math.abs(x.gap)}</span></td>
-      <td style="font-family:var(--mono);color:var(--accent);font-size:12px">${fmt(Math.abs(x.gap)*x.units)}</td></tr>`
-    ).join('');
-  document.getElementById('compInsight').innerHTML=
-    `<strong>Key insight:</strong> ${d.length} products are underpriced vs competitors. Top opportunity: <strong>${d[0]?.name}</strong> — raising price by ₹${Math.abs(d[0]?.gap||0)} could unlock ${fmt(Math.abs(d[0]?.gap||0)*d[0]?.units||0)} in additional revenue.`;
-}
+      <td style="font-family:var(--mono);color:var(--accent);font-size:12px">${fmt(Math.abs(x.gap) * x.units)}</td></tr>`
+          ).join('');
+        document.getElementById('compInsight').innerHTML =
+          `<strong>Key insight:</strong> ${d.length} products are underpriced vs competitors. Top opportunity: <strong>${d[0]?.name}</strong> — raising price by ₹${Math.abs(d[0]?.gap || 0)} could unlock ${fmt(Math.abs(d[0]?.gap || 0) * d[0]?.units || 0)} in additional revenue.`;
+      }
 
-// ── Simulator ──────────────────────────────────────────────────
-function calcSim(){
-  const cat=document.getElementById('simCatSelect').value;
-  const elas=ELAS[cat]||1.4;
-  const disc=parseInt(document.getElementById('discSlider').value);
-  const base=parseInt(document.getElementById('priceSlider').value);
-  document.getElementById('discVal').textContent=disc+'%';
-  document.getElementById('priceVal').textContent=fmt(base);
-  document.getElementById('elasBadge').textContent=`PED = ${elas} · ${elas>1?'Elastic':'Inelastic'}`;
-  const eff=Math.round(base*(1-disc/100));
-  const bu=Math.round(2000000/base);
-  const pu=Math.round(bu*(1+elas*disc/100));
-  const rev=eff*pu;
-  document.getElementById('simEffPrice').textContent=fmt(eff);
-  document.getElementById('simUnits').textContent=pu.toLocaleString('en-IN');
-  document.getElementById('simRev').textContent=fmtK(rev);
-  // Optimal
-  let bestR=0,bestD=0;
-  for(let d=0;d<=50;d++){const r=(base*(1-d/100))*(bu*(1+elas*d/100));if(r>bestR){bestR=r;bestD=d;}}
-  const past=disc>bestD;
-  document.getElementById('simInsight').innerHTML=
-    `<strong>Category: ${cat}</strong> (PED = ${elas}). Optimal discount = <strong>${bestD}%</strong>. ` +
-    (past?`<span style="color:var(--red)">⚠ You are ${disc-bestD}% past the sweet spot — margin erosion exceeds volume gain.</span>`
-          :`<span style="color:var(--accent)">✅ Within optimal range.</span>`)+
-    ` Projected max revenue at ${bestD}%: <strong>${fmtK(bestR)}</strong>.`;
-  // Chart
-  const pts=[];
-  for(let d=0;d<=50;d++){pts.push({x:d,y:Math.round((base*(1-d/100))*(bu*(1+elas*d/100)))});}
-  if(simChart){simChart.data.datasets[0].data=pts;simChart.update('none');return;}
-  simChart=new Chart(document.getElementById('c3'),{
-    type:'line',
-    data:{datasets:[{label:'Revenue',data:pts,borderColor:COLORS[cat]||'#4ade80',backgroundColor:'rgba(74,222,128,.06)',fill:true,tension:.4,pointRadius:0,borderWidth:2}]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>fmtK(ctx.raw.y)}}},
-      scales:{x:{type:'linear',title:{display:true,text:'Discount %',color:'#555b6e',font:{size:11}},ticks:{color:'#555b6e',font:{size:10}},grid:{color:'rgba(255,255,255,.04)'}},
-              y:{ticks:{color:'#555b6e',font:{size:10},callback:v=>fmtK(v)},grid:{color:'rgba(255,255,255,.04)'}}}}
-  });
-}
+      // ── Simulator ──────────────────────────────────────────────────
+      function calcSim() {
+        const cat = document.getElementById('simCatSelect').value;
+        const elas = ELAS[cat] || 1.4;
+        const disc = parseInt(document.getElementById('discSlider').value);
+        const base = parseInt(document.getElementById('priceSlider').value);
+        document.getElementById('discVal').textContent = disc + '%';
+        document.getElementById('priceVal').textContent = fmt(base);
+        document.getElementById('elasBadge').textContent = `PED = ${elas} · ${elas > 1 ? 'Elastic' : 'Inelastic'}`;
+        const eff = Math.round(base * (1 - disc / 100));
+        const bu = Math.round(2000000 / base);
+        const pu = Math.round(bu * (1 + elas * disc / 100));
+        const rev = eff * pu;
+        document.getElementById('simEffPrice').textContent = fmt(eff);
+        document.getElementById('simUnits').textContent = pu.toLocaleString('en-IN');
+        document.getElementById('simRev').textContent = fmtK(rev);
+        // Optimal
+        let bestR = 0, bestD = 0;
+        for (let d = 0; d <= 50; d++) { const r = (base * (1 - d / 100)) * (bu * (1 + elas * d / 100)); if (r > bestR) { bestR = r; bestD = d; } }
+        const past = disc > bestD;
+        document.getElementById('simInsight').innerHTML =
+          `<strong>Category: ${cat}</strong> (PED = ${elas}). Optimal discount = <strong>${bestD}%</strong>. ` +
+          (past ? `<span style="color:var(--red)">⚠ You are ${disc - bestD}% past the sweet spot — margin erosion exceeds volume gain.</span>`
+            : `<span style="color:var(--accent)">✅ Within optimal range.</span>`) +
+          ` Projected max revenue at ${bestD}%: <strong>${fmtK(bestR)}</strong>.`;
+        // Chart
+        const pts = [];
+        for (let d = 0; d <= 50; d++) { pts.push({ x: d, y: Math.round((base * (1 - d / 100)) * (bu * (1 + elas * d / 100))) }); }
+        if (simChart) { simChart.data.datasets[0].data = pts; simChart.update('none'); return; }
+        simChart = new Chart(document.getElementById('c3'), {
+          type: 'line',
+          data: { datasets: [{ label: 'Revenue', data: pts, borderColor: COLORS[cat] || '#4ade80', backgroundColor: 'rgba(74,222,128,.06)', fill: true, tension: .4, pointRadius: 0, borderWidth: 2 }] },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => fmtK(ctx.raw.y) } } },
+            scales: {
+              x: { type: 'linear', title: { display: true, text: 'Discount %', color: '#555b6e', font: { size: 11 } }, ticks: { color: '#555b6e', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,.04)' } },
+              y: { ticks: { color: '#555b6e', font: { size: 10 }, callback: v => fmtK(v) }, grid: { color: 'rgba(255,255,255,.04)' } }
+            }
+          }
+        });
+      }
 
-// ── BCG Chart ──────────────────────────────────────────────────
-function updateBCG(){
-  const d=filtered();
-  const medM=42,medU=350;
-  const qColors={'Star':'#4ade80','Cash Cow':'#3b82f6','Question Mark':'#f59e0b','Dog':'#f87171'};
-  const datasets=Object.keys(qColors).map(q=>({
-    label:q,
-    data:d.filter(x=>x.bcq===q).map(x=>({x:x.margin,y:x.units,r:Math.max(4,Math.sqrt(x.rev/2000))})),
-    backgroundColor:qColors[q]+'99',borderColor:qColors[q],borderWidth:1
-  }));
-  destroyChart('cBCG');
-  charts['cBCG']=new Chart(document.getElementById('cBCG'),{
-    type:'bubble',
-    data:{datasets},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label} · Margin: ${ctx.raw.x}% · Units: ${ctx.raw.y}`}}},
-      scales:{
-        x:{min:20,max:80,title:{display:true,text:'Margin %',color:'#555b6e',font:{size:11}},ticks:{color:'#555b6e'},grid:{color:'rgba(255,255,255,.04)'}},
-        y:{min:50,max:1400,title:{display:true,text:'Units Sold',color:'#555b6e',font:{size:11}},ticks:{color:'#555b6e'},grid:{color:'rgba(255,255,255,.04)'}}
-      }}
-  });
-  // BCG table
-  const tbl=document.getElementById('bcgTable');
-  const qCls={'Star':'e-star','Cash Cow':'e-cashcow','Question Mark':'e-question','Dog':'e-dog'};
-  tbl.innerHTML=`<tr><th>Product</th><th>Margin</th><th>Units</th><th>Quad</th></tr>`+
-    d.slice(0,8).map(x=>`<tr><td style="font-size:11px">${x.name}</td>
+      // ── BCG Chart ──────────────────────────────────────────────────
+      function updateBCG() {
+        const d = filtered();
+        const medM = 42, medU = 350;
+        const qColors = { 'Star': '#4ade80', 'Cash Cow': '#3b82f6', 'Question Mark': '#f59e0b', 'Dog': '#f87171' };
+        const datasets = Object.keys(qColors).map(q => ({
+          label: q,
+          data: d.filter(x => x.bcq === q).map(x => ({ x: x.margin, y: x.units, r: Math.max(4, Math.sqrt(x.rev / 2000)) })),
+          backgroundColor: qColors[q] + '99', borderColor: qColors[q], borderWidth: 1
+        }));
+        destroyChart('cBCG');
+        charts['cBCG'] = new Chart(document.getElementById('cBCG'), {
+          type: 'bubble',
+          data: { datasets },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `${ctx.dataset.label} · Margin: ${ctx.raw.x}% · Units: ${ctx.raw.y}` } } },
+            scales: {
+              x: { min: 20, max: 80, title: { display: true, text: 'Margin %', color: '#555b6e', font: { size: 11 } }, ticks: { color: '#555b6e' }, grid: { color: 'rgba(255,255,255,.04)' } },
+              y: { min: 50, max: 1400, title: { display: true, text: 'Units Sold', color: '#555b6e', font: { size: 11 } }, ticks: { color: '#555b6e' }, grid: { color: 'rgba(255,255,255,.04)' } }
+            }
+          }
+        });
+        // BCG table
+        const tbl = document.getElementById('bcgTable');
+        const qCls = { 'Star': 'e-star', 'Cash Cow': 'e-cashcow', 'Question Mark': 'e-question', 'Dog': 'e-dog' };
+        tbl.innerHTML = `<tr><th>Product</th><th>Margin</th><th>Units</th><th>Quad</th></tr>` +
+          d.slice(0, 8).map(x => `<tr><td style="font-size:11px">${x.name}</td>
       <td style="font-family:var(--mono)">${x.margin}%</td>
       <td style="font-family:var(--mono)">${x.units}</td>
       <td><span class="badge-sm ${qCls[x.bcq]}">${x.bcq}</span></td></tr>`
-    ).join('');
-}
+          ).join('');
+      }
 
-// ── A/B Test ──────────────────────────────────────────────────
-function updateAB(){
-  const cats=activeCat==='All'?CATS:[activeCat];
-  const abData=cats.map(cat=>{
-    const elas=ELAS[cat];
-    const optDisc=elas>1?12:5;
-    const d=RAW.filter(x=>x.cat===cat);
-    const baseRev=d.reduce((a,x)=>a+x.rev,0)/d.length;
-    const treatRev=baseRev*(1+elas*optDisc/100)*0.88;
-    const lift=((treatRev-baseRev)/baseRev*100).toFixed(1);
-    const pval=(Math.random()*0.04+0.001).toFixed(4);
-    return{cat,baseRev:Math.round(baseRev),treatRev:Math.round(treatRev),lift,pval,sig:parseFloat(pval)<0.05};
-  });
-  destroyChart('cAB');
-  charts['cAB']=new Chart(document.getElementById('cAB'),{
-    type:'bar',
-    data:{labels:abData.map(d=>d.cat),
-      datasets:[
-        {label:'Control',data:abData.map(d=>d.baseRev),backgroundColor:'#374151',borderRadius:4,borderSkipped:false},
-        {label:'Treatment',data:abData.map(d=>d.treatRev),backgroundColor:abData.map(d=>COLORS[d.cat]),borderRadius:4,borderSkipped:false}
-      ]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': '+fmtK(ctx.raw)}}},
-      scales:{x:{ticks:{color:'#555b6e',font:{size:10},autoSkip:false,maxRotation:20},grid:{display:false}},
-              y:{ticks:{color:'#555b6e',font:{size:10},callback:v=>fmtK(v)},grid:{color:'rgba(255,255,255,.04)'}}}}
-  });
-  const rows=document.getElementById('abRows');
-  rows.innerHTML=abData.map(d=>`<div class="ab-row">
+      // ── A/B Test ──────────────────────────────────────────────────
+      function updateAB() {
+        const cats = activeCat === 'All' ? CATS : [activeCat];
+        const abData = cats.map(cat => {
+          const elas = ELAS[cat];
+          const optDisc = elas > 1 ? 12 : 5;
+          const d = RAW.filter(x => x.cat === cat);
+          const baseRev = d.reduce((a, x) => a + x.rev, 0) / d.length;
+          const treatRev = baseRev * (1 + elas * optDisc / 100) * 0.88;
+          const lift = ((treatRev - baseRev) / baseRev * 100).toFixed(1);
+          const pval = (Math.random() * 0.04 + 0.001).toFixed(4);
+          return { cat, baseRev: Math.round(baseRev), treatRev: Math.round(treatRev), lift, pval, sig: parseFloat(pval) < 0.05 };
+        });
+        destroyChart('cAB');
+        charts['cAB'] = new Chart(document.getElementById('cAB'), {
+          type: 'bar',
+          data: {
+            labels: abData.map(d => d.cat),
+            datasets: [
+              { label: 'Control', data: abData.map(d => d.baseRev), backgroundColor: '#374151', borderRadius: 4, borderSkipped: false },
+              { label: 'Treatment', data: abData.map(d => d.treatRev), backgroundColor: abData.map(d => COLORS[d.cat]), borderRadius: 4, borderSkipped: false }
+            ]
+          },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + fmtK(ctx.raw) } } },
+            scales: {
+              x: { ticks: { color: '#555b6e', font: { size: 10 }, autoSkip: false, maxRotation: 20 }, grid: { display: false } },
+              y: { ticks: { color: '#555b6e', font: { size: 10 }, callback: v => fmtK(v) }, grid: { color: 'rgba(255,255,255,.04)' } }
+            }
+          }
+        });
+        const rows = document.getElementById('abRows');
+        rows.innerHTML = abData.map(d => `<div class="ab-row">
     <div><div class="ab-cat">${d.cat}</div><div style="font-size:11px;color:var(--text3)">p=${d.pval}</div></div>
-    <div style="text-align:right"><div class="ab-lift" style="color:${parseFloat(d.lift)>0?'var(--accent)':'var(--red)'}">${d.lift>0?'+':''}${d.lift}%</div>
-    <div style="font-size:11px;color:${d.sig?'var(--accent)':'var(--text3)'}">${d.sig?'✅ Significant':'❌ Not significant'}</div></div>
+    <div style="text-align:right"><div class="ab-lift" style="color:${parseFloat(d.lift) > 0 ? 'var(--accent)' : 'var(--red)'}">${d.lift > 0 ? '+' : ''}${d.lift}%</div>
+    <div style="font-size:11px;color:${d.sig ? 'var(--accent)' : 'var(--text3)'}">${d.sig ? '✅ Significant' : '❌ Not significant'}</div></div>
   </div>`).join('');
-  const sigCount=abData.filter(d=>d.sig).length;
-  document.getElementById('abInsight').innerHTML=
-    `<strong>${sigCount}/${abData.length} categories</strong> show statistically significant improvement with optimised pricing. ` +
-    `Implement treatment pricing for significant categories to capture projected revenue lift.`;
-}
+        const sigCount = abData.filter(d => d.sig).length;
+        document.getElementById('abInsight').innerHTML =
+          `<strong>${sigCount}/${abData.length} categories</strong> show statistically significant improvement with optimised pricing. ` +
+          `Implement treatment pricing for significant categories to capture projected revenue lift.`;
+      }
 
-// ── Anomaly Detection ──────────────────────────────────────────
-function updateAnomaly(){
-  const d=filtered();
-  const zScores=d.map(x=>{
-    const catP=d.filter(c=>c.cat===x.cat).map(c=>c.price);
-    const mean=catP.reduce((a,b)=>a+b,0)/catP.length;
-    const std=Math.sqrt(catP.reduce((a,b)=>a+(b-mean)**2,0)/catP.length)||1;
-    return{...x,z:parseFloat(((x.price-mean)/std).toFixed(2))};
-  });
-  destroyChart('cAnom');
-  charts['cAnom']=new Chart(document.getElementById('cAnom'),{
-    type:'scatter',
-    data:{datasets:[{
-      label:'Products',
-      data:zScores.map((x,i)=>({x:i,y:x.z})),
-      backgroundColor:zScores.map(x=>Math.abs(x.z)>2?'#f87171':Math.abs(x.z)>1?'#f59e0b':'#4ade80'),
-      pointRadius:5,borderWidth:0
-    }]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const p=zScores[ctx.dataIndex];return`${p.name} (z=${p.z})`;}}}},
-      scales:{
-        x:{display:false},
-        y:{ticks:{color:'#555b6e',font:{size:10}},grid:{color:'rgba(255,255,255,.04)'},
-           title:{display:true,text:'Z-Score (within category)',color:'#555b6e',font:{size:11}}}
-      },
-      annotation:{annotations:{line1:{type:'line',y:2,borderColor:'#f87171',borderWidth:1,borderDash:[4,3]},
-                                line2:{type:'line',y:-2,borderColor:'#f87171',borderWidth:1,borderDash:[4,3]}}}}
-  });
-  const anomalies=zScores.filter(x=>Math.abs(x.z)>1.5).sort((a,b)=>Math.abs(b.z)-Math.abs(a.z));
-  const tbl=document.getElementById('anomTable');
-  tbl.innerHTML=`<tr><th>Product</th><th>Price</th><th>Z-Score</th><th>Flag</th></tr>`+
-    anomalies.slice(0,6).map(x=>{
-      const cls=x.z>1.5?'a-high':x.z<-1.5?'a-low':'a-normal';
-      const txt=x.z>1.5?'HIGH':x.z<-1.5?'LOW':'NORMAL';
-      return`<tr><td style="font-size:11px">${x.name}</td>
+      // ── Anomaly Detection ──────────────────────────────────────────
+      function updateAnomaly() {
+        const d = filtered();
+        const zScores = d.map(x => {
+          const catP = d.filter(c => c.cat === x.cat).map(c => c.price);
+          const mean = catP.reduce((a, b) => a + b, 0) / catP.length;
+          const std = Math.sqrt(catP.reduce((a, b) => a + (b - mean) ** 2, 0) / catP.length) || 1;
+          return { ...x, z: parseFloat(((x.price - mean) / std).toFixed(2)) };
+        });
+        destroyChart('cAnom');
+        charts['cAnom'] = new Chart(document.getElementById('cAnom'), {
+          type: 'scatter',
+          data: {
+            datasets: [{
+              label: 'Products',
+              data: zScores.map((x, i) => ({ x: i, y: x.z })),
+              backgroundColor: zScores.map(x => Math.abs(x.z) > 2 ? '#f87171' : Math.abs(x.z) > 1 ? '#f59e0b' : '#4ade80'),
+              pointRadius: 5, borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => { const p = zScores[ctx.dataIndex]; return `${p.name} (z=${p.z})`; } } } },
+            scales: {
+              x: { display: false },
+              y: {
+                ticks: { color: '#555b6e', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,.04)' },
+                title: { display: true, text: 'Z-Score (within category)', color: '#555b6e', font: { size: 11 } }
+              }
+            },
+            annotation: {
+              annotations: {
+                line1: { type: 'line', y: 2, borderColor: '#f87171', borderWidth: 1, borderDash: [4, 3] },
+                line2: { type: 'line', y: -2, borderColor: '#f87171', borderWidth: 1, borderDash: [4, 3] }
+              }
+            }
+          }
+        });
+        const anomalies = zScores.filter(x => Math.abs(x.z) > 1.5).sort((a, b) => Math.abs(b.z) - Math.abs(a.z));
+        const tbl = document.getElementById('anomTable');
+        tbl.innerHTML = `<tr><th>Product</th><th>Price</th><th>Z-Score</th><th>Flag</th></tr>` +
+          anomalies.slice(0, 6).map(x => {
+            const cls = x.z > 1.5 ? 'a-high' : x.z < -1.5 ? 'a-low' : 'a-normal';
+            const txt = x.z > 1.5 ? 'HIGH' : x.z < -1.5 ? 'LOW' : 'NORMAL';
+            return `<tr><td style="font-size:11px">${x.name}</td>
         <td style="font-family:var(--mono)">${fmt(x.price)}</td>
-        <td style="font-family:var(--mono);color:${Math.abs(x.z)>2?'var(--red)':'var(--amber)'}">${x.z}</td>
+        <td style="font-family:var(--mono);color:${Math.abs(x.z) > 2 ? 'var(--red)' : 'var(--amber)'}">${x.z}</td>
         <td><span class="anomaly-tag ${cls}">${txt}</span></td></tr>`;
-    }).join('');
-  document.getElementById('anomInsight').innerHTML=
-    `<strong>${anomalies.filter(x=>Math.abs(x.z)>1.5).length} products</strong> have anomalous pricing. ` +
-    `HIGH-flagged products are above category price band — risk of demand loss. LOW-flagged products may be undervalued.`;
-}
+          }).join('');
+        document.getElementById('anomInsight').innerHTML =
+          `<strong>${anomalies.filter(x => Math.abs(x.z) > 1.5).length} products</strong> have anomalous pricing. ` +
+          `HIGH-flagged products are above category price band — risk of demand loss. LOW-flagged products may be undervalued.`;
+      }
 
-// ── ML Feature Importance ──────────────────────────────────────
-function updateML(){
-  const features=[
-    {name:'Competitor price',imp:0.42},
-    {name:'Cost price',imp:0.28},
-    {name:'Category',imp:0.13},
-    {name:'Units sold',imp:0.08},
-    {name:'Customer rating',imp:0.05},
-    {name:'Segment',imp:0.03},
-    {name:'Discount %',imp:0.01},
-  ];
-  const fi=document.getElementById('featureImportance');
-  fi.innerHTML=features.map(f=>`<div class="fi-bar-wrap">
-    <div class="fi-label"><span>${f.name}</span><span style="font-family:var(--mono)">${(f.imp*100).toFixed(0)}%</span></div>
-    <div class="fi-track"><div class="fi-fill" style="width:${f.imp*100}%"></div></div>
+      // ── ML Feature Importance ──────────────────────────────────────
+      function updateML() {
+        const features = [
+          { name: 'Competitor price', imp: 0.42 },
+          { name: 'Cost price', imp: 0.28 },
+          { name: 'Category', imp: 0.13 },
+          { name: 'Units sold', imp: 0.08 },
+          { name: 'Customer rating', imp: 0.05 },
+          { name: 'Segment', imp: 0.03 },
+          { name: 'Discount %', imp: 0.01 },
+        ];
+        const fi = document.getElementById('featureImportance');
+        fi.innerHTML = features.map(f => `<div class="fi-bar-wrap">
+    <div class="fi-label"><span>${f.name}</span><span style="font-family:var(--mono)">${(f.imp * 100).toFixed(0)}%</span></div>
+    <div class="fi-track"><div class="fi-fill" style="width:${f.imp * 100}%"></div></div>
   </div>`).join('');
-  const d=filtered().slice(0,6);
-  const tbl=document.getElementById('mlTable');
-  tbl.innerHTML=`<tr><th>Product</th><th>Current</th><th>ML Rec</th><th>Adj</th></tr>`+
-    d.map(x=>{
-      const ml=Math.round(x.comp*0.97+x.cost*0.15+x.rating*80);
-      const adj=ml-x.price;
-      return`<tr><td style="font-size:11px">${x.name.slice(0,14)}</td>
+        const d = filtered().slice(0, 6);
+        const tbl = document.getElementById('mlTable');
+        tbl.innerHTML = `<tr><th>Product</th><th>Current</th><th>ML Rec</th><th>Adj</th></tr>` +
+          d.map(x => {
+            const ml = Math.round(x.comp * 0.97 + x.cost * 0.15 + x.rating * 80);
+            const adj = ml - x.price;
+            return `<tr><td style="font-size:11px">${x.name.slice(0, 14)}</td>
         <td style="font-family:var(--mono)">${fmt(x.price)}</td>
         <td style="font-family:var(--mono);color:var(--blue)">${fmt(ml)}</td>
-        <td style="font-family:var(--mono);color:${adj>0?'var(--accent)':'var(--red)'}">${adj>0?'+':''}₹${Math.abs(adj)}</td></tr>`;
-    }).join('');
-  document.getElementById('mlInsight').innerHTML=
-    `<strong>Model insight:</strong> Competitor price (42%) and cost price (28%) are the strongest predictors of optimal pricing — confirming that market-based and cost-plus models should be combined. Category (13%) shows significant pricing power differences across segments.`;
-}
+        <td style="font-family:var(--mono);color:${adj > 0 ? 'var(--accent)' : 'var(--red)'}">${adj > 0 ? '+' : ''}₹${Math.abs(adj)}</td></tr>`;
+          }).join('');
+        document.getElementById('mlInsight').innerHTML =
+          `<strong>Model insight:</strong> Competitor price (42%) and cost price (28%) are the strongest predictors of optimal pricing — confirming that market-based and cost-plus models should be combined. Category (13%) shows significant pricing power differences across segments.`;
+      }
 
-// ── Bundling ──────────────────────────────────────────────────
-function updateBundling(){
-  const d=filtered();
-  const totalRev=d.reduce((a,x)=>a+x.rev,0);
-  const bundles=[
-    {name:'Electronics + Warranty Bundle',desc:'Device + 1yr warranty. Cart value ↑ 28%.',pct:0.28,cat:'Electronics'},
-    {name:'Beauty Essentials Kit',desc:'3-product skincare set at 15% off. Volume ↑ 22%.',pct:0.22,cat:'Beauty'},
-    {name:'Sports Starter Pack',desc:'Equipment + accessories. Cross-sell 34%.',pct:0.18,cat:'Sports'},
-  ];
-  const bList=document.getElementById('bundleList');
-  bList.innerHTML=bundles.map(b=>{
-    const base=d.filter(x=>x.cat===b.cat).reduce((a,x)=>a+x.rev,0)||totalRev/3;
-    const uplift=Math.round(base*b.pct);
-    return`<div class="bundle-row"><div><div class="bundle-name">${b.name}</div><div class="bundle-desc">${b.desc}</div></div>
+      // ── Bundling ──────────────────────────────────────────────────
+      function updateBundling() {
+        const d = filtered();
+        const totalRev = d.reduce((a, x) => a + x.rev, 0);
+        const bundles = [
+          { name: 'Electronics + Warranty Bundle', desc: 'Device + 1yr warranty. Cart value ↑ 28%.', pct: 0.28, cat: 'Electronics' },
+          { name: 'Beauty Essentials Kit', desc: '3-product skincare set at 15% off. Volume ↑ 22%.', pct: 0.22, cat: 'Beauty' },
+          { name: 'Sports Starter Pack', desc: 'Equipment + accessories. Cross-sell 34%.', pct: 0.18, cat: 'Sports' },
+        ];
+        const bList = document.getElementById('bundleList');
+        bList.innerHTML = bundles.map(b => {
+          const base = d.filter(x => x.cat === b.cat).reduce((a, x) => a + x.rev, 0) || totalRev / 3;
+          const uplift = Math.round(base * b.pct);
+          return `<div class="bundle-row"><div><div class="bundle-name">${b.name}</div><div class="bundle-desc">${b.desc}</div></div>
       <div class="bundle-uplift">+${fmtK(uplift)}</div></div>`;
-  }).join('');
-  // Waterfall
-  const uplifts=bundles.map(b=>{
-    const base=d.filter(x=>x.cat===b.cat).reduce((a,x)=>a+x.rev,0)||totalRev/3;
-    return Math.round(base*b.pct);
-  });
-  const waterfall=[totalRev,totalRev+uplifts[0],totalRev+uplifts[0]+uplifts[1],totalRev+uplifts.reduce((a,b)=>a+b,0)];
-  const wLabels=['Current','+ Electronics','+ Beauty','Total Potential'];
-  destroyChart('c4');
-  charts['c4']=new Chart(document.getElementById('c4'),{
-    type:'bar',
-    data:{labels:wLabels,datasets:[{data:waterfall,backgroundColor:['#374151','#3b82f6','#a78bfa','#4ade80'],borderRadius:5,borderSkipped:false}]},
-    options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>fmtK(ctx.raw)}}},
-      scales:{x:{ticks:{color:'#555b6e',font:{size:10},callback:v=>fmtK(v)},grid:{color:'rgba(255,255,255,.04)'}},
-              y:{ticks:{color:'#8b90a0',font:{size:11}},grid:{display:false}}}}
-  });
-  const totalUplift=uplifts.reduce((a,b)=>a+b,0);
-  document.getElementById('bundleInsight').innerHTML=
-    `<strong>Combined uplift: +${fmtK(totalUplift)}</strong> (+${(totalUplift/totalRev*100).toFixed(1)}%). ` +
-    `Priority: Electronics bundle first (highest ROI) → Beauty Kit → Sports Pack as seasonal promotion.`;
-}
+        }).join('');
+        // Waterfall
+        const uplifts = bundles.map(b => {
+          const base = d.filter(x => x.cat === b.cat).reduce((a, x) => a + x.rev, 0) || totalRev / 3;
+          return Math.round(base * b.pct);
+        });
+        const waterfall = [totalRev, totalRev + uplifts[0], totalRev + uplifts[0] + uplifts[1], totalRev + uplifts.reduce((a, b) => a + b, 0)];
+        const wLabels = ['Current', '+ Electronics', '+ Beauty', 'Total Potential'];
+        destroyChart('c4');
+        charts['c4'] = new Chart(document.getElementById('c4'), {
+          type: 'bar',
+          data: { labels: wLabels, datasets: [{ data: waterfall, backgroundColor: ['#374151', '#3b82f6', '#a78bfa', '#4ade80'], borderRadius: 5, borderSkipped: false }] },
+          options: {
+            responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+            plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => fmtK(ctx.raw) } } },
+            scales: {
+              x: { ticks: { color: '#555b6e', font: { size: 10 }, callback: v => fmtK(v) }, grid: { color: 'rgba(255,255,255,.04)' } },
+              y: { ticks: { color: '#8b90a0', font: { size: 11 } }, grid: { display: false } }
+            }
+          }
+        });
+        const totalUplift = uplifts.reduce((a, b) => a + b, 0);
+        document.getElementById('bundleInsight').innerHTML =
+          `<strong>Combined uplift: +${fmtK(totalUplift)}</strong> (+${(totalUplift / totalRev * 100).toFixed(1)}%). ` +
+          `Priority: Electronics bundle first (highest ROI) → Beauty Kit → Sports Pack as seasonal promotion.`;
+      }
 
-// ── Export CSV ──────────────────────────────────────────────────
-function exportCSV(){
-  const d=filtered();
-  const header='Product,Category,Segment,Price,Competitor,Gap,Units,Revenue,Margin,Rating,BCG';
-  const rows=d.map(x=>[x.name,x.cat,x.seg,x.price,x.comp,x.gap,x.units,x.rev,x.margin,x.rating,x.bcq].join(','));
-  const blob=new Blob([[header,...rows].join('\n')],{type:'text/csv'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download=`pricing_analysis_${activeCat.replace(/ /g,'_')}_${activeSeg}.csv`;
-  a.click();
-}
+      // ── Export CSV ──────────────────────────────────────────────────
+      function exportCSV() {
+        const d = filtered();
+        const header = 'Product,Category,Segment,Price,Competitor,Gap,Units,Revenue,Margin,Rating,BCG';
+        const rows = d.map(x => [x.name, x.cat, x.seg, x.price, x.comp, x.gap, x.units, x.rev, x.margin, x.rating, x.bcq].join(','));
+        const blob = new Blob([[header, ...rows].join('\n')], { type: 'text/csv' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `pricing_analysis_${activeCat.replace(/ /g, '_')}_${activeSeg}.csv`;
+        a.click();
+      }
 
-// ── Master refresh ──────────────────────────────────────────────
-function refreshAll(){
-  updateKPIs();
-  buildLegend();
-  updateC1();
-  updateTierChart();
-  updateC2();
-  updateElasTable();
-  updateCompBars();
-  updateOppTable();
-  calcSim();
-  updateBCG();
-  updateAB();
-  updateAnomaly();
-  updateML();
-  updateBundling();
-}
+      // ── Master refresh ──────────────────────────────────────────────
+      function refreshAll() {
+        updateKPIs();
+        buildLegend();
+        updateC1();
+        updateTierChart();
+        updateC2();
+        updateElasTable();
+        updateCompBars();
+        updateOppTable();
+        calcSim();
+        updateBCG();
+        updateAB();
+        updateAnomaly();
+        updateML();
+        updateBundling();
+      }
 
-// Init
-refreshAll();
-</script>
+      // Init
+      refreshAll();
+    </script>
 </body>
+
 </html>
