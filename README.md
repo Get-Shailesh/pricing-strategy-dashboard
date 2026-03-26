@@ -4,7 +4,7 @@
 
 <br/>
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_Dashboard-4ade80?style=for-the-badge&logoColor=white)](https://Git-Shailesh.github.io/pricing-strategy-dashboard/)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_Dashboard-4ade80?style=for-the-badge&logoColor=white)](https://Get-Shailesh.github.io/pricing-strategy-dashboard/)
 [![Python](https://img.shields.io/badge/Python-3.11+-3b82f6?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![SQL](https://img.shields.io/badge/SQL-SQLite-f59e0b?style=for-the-badge&logo=sqlite&logoColor=white)](https://sqlite.org)
 [![Chart.js](https://img.shields.io/badge/Chart.js-4.4.1-f472b6?style=for-the-badge&logo=chartdotjs&logoColor=white)](https://chartjs.org)
@@ -38,7 +38,7 @@
 
 ## 🚀 Live Demo
 
-**👉 [Open the Interactive Dashboard](https://Git-Shailesh.github.io/pricing-strategy-dashboard/)**
+**👉 [Open the Interactive Dashboard](https://Get-Shailesh.github.io/pricing-strategy-dashboard/)**
 
 The dashboard is fully interactive — no installation required. Open in any browser.
 
@@ -341,7 +341,7 @@ This project is licensed under the MIT License — feel free to use it for your 
 
 ⭐ **Star this repo if it helped you** · 🍴 **Fork it to build your own version**
 
-[![GitHub stars](https://img.shields.io/github/stars/YOUR_USERNAME/pricing-strategy-dashboard?style=social)](https://github.com/YOUR_USERNAME/pricing-strategy-dashboard)
-[![GitHub forks](https://img.shields.io/github/forks/YOUR_USERNAME/pricing-strategy-dashboard?style=social)](https://github.com/YOUR_USERNAME/pricing-strategy-dashboard/fork)
+[![GitHub stars](https://img.shields.io/github/stars/Get-Shailesh/pricing-strategy-dashboard?style=social)](https://github.com/Get-Shailesh/pricing-strategy-dashboard)
+[![GitHub forks](https://img.shields.io/github/forks/Get-Shailesh/pricing-strategy-dashboard?style=social)](https://github.com/Get-Shailesh/pricing-strategy-dashboard/fork)
 
 </div>
