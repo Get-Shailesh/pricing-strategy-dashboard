@@ -1,0 +1,59 @@
+project:
+  name: "Pricing Strategy Analysis"
+  version: "2.0"
+  author: "Data Analyst Portfolio"
+  dataset: "data/pricing_data.csv"
+  db_path: "data/pricing.db"
+
+pricing:
+  elasticity_by_category:
+    Electronics: 1.8
+    Clothing: 2.3
+    "Home & Kitchen": 1.1
+    Sports: 1.5
+    Beauty: 0.7
+    Books: 0.5
+  default_elasticity: 1.4
+  optimal_discount_range: [8, 15]
+  price_tiers:
+    Budget: [0, 500]
+    Mid-range: [500, 1000]
+    Premium: [1000, 2000]
+    Luxury: [2000, 999999]
+
+simulation:
+  base_price: 1200
+  base_units: 250
+  discount_min: 0
+  discount_max: 50
+  price_min: 200
+  price_max: 3000
+
+ab_test:
+  control_group_size: 500
+  treatment_group_size: 500
+  confidence_level: 0.95
+  min_detectable_effect: 0.05
+
+anomaly_detection:
+  method: "iqr"
+  z_score_threshold: 2.5
+  iqr_multiplier: 1.5
+
+bundling:
+  strategies:
+    - name: "Electronics + Warranty Bundle"
+      category: "Electronics"
+      uplift_pct: 0.28
+    - name: "Beauty Essentials Kit"
+      category: "Beauty"
+      uplift_pct: 0.22
+    - name: "Sports Starter Pack"
+      category: "Sports"
+      uplift_pct: 0.18
+
+ml:
+  test_size: 0.2
+  random_state: 42
+  features: ["competitor_price", "cost_price", "units_sold", "discount_pct", "customer_rating"]
+  target: "your_price"

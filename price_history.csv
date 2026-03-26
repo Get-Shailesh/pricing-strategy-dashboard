@@ -1,0 +1,21 @@
+history_id,product_id,product_name,category,price,valid_from,valid_to,is_current,change_reason
+1,P001,Samsung 4K TV 55",Electronics,2500,2024-01-01,2024-03-31,0,Initial launch price
+2,P001,Samsung 4K TV 55",Electronics,2350,2024-04-01,2024-06-30,0,Competitive response
+3,P001,Samsung 4K TV 55",Electronics,2200,2024-07-01,2024-12-31,1,Festival season pricing
+4,P002,Sony Headphones WH-1000,Electronics,2100,2024-01-01,2024-04-30,0,Initial launch price
+5,P002,Sony Headphones WH-1000,Electronics,1950,2024-05-01,2024-08-31,0,Mid-year correction
+6,P002,Sony Headphones WH-1000,Electronics,1800,2024-09-01,2024-12-31,1,Competitor undercut response
+7,P011,Levi's Slim Fit Jeans,Clothing,950,2024-01-01,2024-03-31,0,Winter premium pricing
+8,P011,Levi's Slim Fit Jeans,Clothing,900,2024-04-01,2024-06-30,0,Summer reduction
+9,P011,Levi's Slim Fit Jeans,Clothing,850,2024-07-01,2024-12-31,1,Competitive match
+10,P021,Prestige Pressure Cooker 5L,Home & Kitchen,1600,2024-01-01,2024-05-31,0,Premium positioning
+11,P021,Prestige Pressure Cooker 5L,Home & Kitchen,1500,2024-06-01,2024-08-31,0,Volume strategy
+12,P021,Prestige Pressure Cooker 5L,Home & Kitchen,1400,2024-09-01,2024-12-31,1,Festival discount
+13,P031,Cosco Badminton Set,Sports,1300,2024-01-01,2024-04-30,0,New year premium
+14,P031,Cosco Badminton Set,Sports,1200,2024-05-01,2024-07-31,0,Monsoon reduction
+15,P031,Cosco Badminton Set,Sports,1100,2024-08-01,2024-12-31,1,Back to school pricing
+16,P041,Lotus Herbals Sunscreen,Beauty,750,2024-01-01,2024-03-31,0,Winter premium
+17,P041,Lotus Herbals Sunscreen,Beauty,700,2024-04-01,2024-06-30,0,Summer push
+18,P041,Lotus Herbals Sunscreen,Beauty,650,2024-07-01,2024-12-31,1,Competitive parity
+19,P051,Atomic Habits,Books,380,2024-01-01,2024-06-30,0,Hardcover pricing
+20,P051,Atomic Habits,Books,320,2024-07-01,2024-12-31,1,Paperback transition

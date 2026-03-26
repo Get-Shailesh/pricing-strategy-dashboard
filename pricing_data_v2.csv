@@ -1,0 +1,61 @@
+product_id,product_name,category,your_price,competitor_price,units_sold,discount_pct,customer_rating,cost_price,revenue,profit,segment,month
+P001,Samsung 4K TV 55",Electronics,2200,2450,310,5,4.3,1400,682000,248000,Premium,Jan
+P002,Sony Headphones WH-1000,Electronics,1800,1950,280,8,4.5,900,504000,252000,Premium,Jan
+P003,Apple Watch Series 8,Electronics,3200,3500,190,0,4.7,2100,608000,208000,Luxury,Jan
+P004,Noise Smartwatch Pro,Electronics,1200,1100,350,10,4.1,600,420000,210000,Premium,Jan
+P005,Boat Airdopes 141,Electronics,900,850,410,12,4.2,400,369000,205000,Mid-range,Jan
+P006,OnePlus Nord Buds 2,Electronics,1100,1050,390,5,4.4,500,429000,234000,Premium,Feb
+P007,JBL Flip 6 Speaker,Electronics,2800,3000,220,8,4.6,1600,616000,264000,Luxury,Feb
+P008,Realme Pad Mini,Electronics,1500,1400,260,10,4.0,800,390000,182000,Premium,Feb
+P009,Zebronics Monitor 24",Electronics,1800,1700,200,5,4.2,900,342000,162000,Premium,Mar
+P010,Canon PIXMA Printer,Electronics,3500,3800,160,0,4.5,2200,560000,208000,Luxury,Mar
+P011,Levi's Slim Fit Jeans,Clothing,850,780,520,10,4.4,350,442000,260000,Mid-range,Jan
+P012,H&M Casual T-Shirt,Clothing,450,420,720,15,4.0,150,324000,216000,Budget,Jan
+P013,Allen Solly Formal Shirt,Clothing,1100,1050,390,5,4.2,400,429000,273000,Premium,Jan
+P014,Adidas Track Pants,Clothing,700,650,580,8,4.3,280,406000,243600,Mid-range,Feb
+P015,Zara Summer Dress,Clothing,1300,1200,310,12,4.6,500,403000,248000,Premium,Feb
+P016,Puma Sports Shoes,Clothing,2200,2100,280,5,4.5,1000,616000,336000,Luxury,Feb
+P017,Wrangler Cargo Shorts,Clothing,650,600,480,10,4.1,250,312000,192000,Mid-range,Mar
+P018,FabIndia Kurta Set,Clothing,900,850,420,8,4.4,350,345600,210000,Mid-range,Mar
+P019,US Polo Assn Polo Shirt,Clothing,1200,1100,360,5,4.3,450,410400,270000,Premium,Mar
+P020,Biba Ethnic Wear,Clothing,1800,1700,290,0,4.7,800,522000,290200,Premium,Mar
+P021,Prestige Pressure Cooker 5L,Home & Kitchen,1400,1350,290,5,4.5,700,406000,203000,Premium,Jan
+P022,Philips Air Fryer,Home & Kitchen,3500,3200,180,0,4.6,2000,630000,270000,Luxury,Jan
+P023,Milton Water Bottle Set,Home & Kitchen,550,480,640,15,4.1,200,352000,224000,Budget,Jan
+P024,Wonderchef Cookware Set,Home & Kitchen,2800,2900,160,8,4.4,1500,448000,208000,Luxury,Feb
+P025,Cello Storage Containers,Home & Kitchen,380,350,810,10,4.0,130,307800,203300,Budget,Feb
+P026,Bajaj Mixer Grinder,Home & Kitchen,2200,2100,240,5,4.3,1200,501600,240000,Premium,Feb
+P027,Pigeon Induction Cooktop,Home & Kitchen,1800,1700,280,8,4.2,900,460800,216000,Premium,Mar
+P028,Kent RO Water Purifier,Home & Kitchen,8500,9000,120,0,4.6,5000,1020000,420000,Luxury,Mar
+P029,Havells Ceiling Fan,Home & Kitchen,1200,1100,340,10,4.1,600,367200,204000,Premium,Mar
+P030,Usha Iron 1000W,Home & Kitchen,650,600,480,5,4.0,280,296400,177600,Mid-range,Mar
+P031,Cosco Badminton Set,Sports,1100,1200,380,5,4.3,500,418000,228000,Premium,Jan
+P032,Nivia Football Size 5,Sports,650,700,520,10,4.1,250,338000,208000,Mid-range,Jan
+P033,Yonex Badminton Racket,Sports,1800,1950,280,8,4.7,900,504000,252000,Premium,Jan
+P034,Decathlon Yoga Mat,Sports,800,850,460,12,4.2,300,368000,230000,Mid-range,Feb
+P035,Spalding Basketball,Sports,1200,1100,320,0,4.4,550,384000,204000,Premium,Feb
+P036,Nivia Cricket Bat,Sports,2500,2700,200,5,4.5,1300,500000,240000,Luxury,Feb
+P037,Adidas Football Boots,Sports,3500,3800,160,0,4.6,2000,560000,240000,Luxury,Mar
+P038,Cosco Swimming Goggles,Sports,450,500,580,10,4.0,180,234000,153000,Budget,Mar
+P039,Reebok Gym Gloves,Sports,650,700,490,8,4.2,250,300300,196000,Mid-range,Mar
+P040,Boldfit Whey Protein,Sports,1800,1900,310,5,4.4,900,531900,278100,Premium,Mar
+P041,Lotus Herbals Sunscreen,Beauty,650,700,440,5,4.5,200,286000,198000,Mid-range,Jan
+P042,Mamaearth Face Wash,Beauty,350,380,680,15,4.3,100,238000,170000,Budget,Jan
+P043,Lakme Compact Powder,Beauty,280,250,790,10,3.9,80,221200,157900,Budget,Jan
+P044,Forest Essentials Cream,Beauty,1200,1300,310,0,4.7,500,372000,217000,Premium,Feb
+P045,Plum Vitamin C Serum,Beauty,550,600,490,8,4.4,180,269500,182700,Mid-range,Feb
+P046,WOW Skin Science Shampoo,Beauty,400,420,620,10,4.2,130,222000,167400,Budget,Feb
+P047,Biotique Bio Sunscreen,Beauty,250,280,850,15,4.0,70,212500,153000,Budget,Mar
+P048,Kama Ayurveda Face Pack,Beauty,900,950,380,5,4.6,350,323100,209800,Mid-range,Mar
+P049,The Moms Co Face Serum,Beauty,750,800,420,8,4.5,300,289800,189000,Mid-range,Mar
+P050,Nykaa Kajal,Beauty,180,200,1100,10,4.1,50,178200,143000,Budget,Mar
+P051,Atomic Habits,Books,320,290,610,5,4.8,80,195200,146200,Budget,Jan
+P052,Rich Dad Poor Dad,Books,280,260,720,10,4.6,60,201600,158400,Budget,Jan
+P053,The Psychology of Money,Books,350,320,590,5,4.7,90,206500,153500,Budget,Jan
+P054,Ikigai,Books,299,275,680,8,4.5,75,203320,152820,Budget,Feb
+P055,Zero to One,Books,399,370,540,0,4.6,100,215460,161460,Mid-range,Feb
+P056,Deep Work - Cal Newport,Books,349,320,600,5,4.7,85,209400,158400,Budget,Feb
+P057,The Alchemist,Books,250,230,780,10,4.8,55,180000,147300,Budget,Mar
+P058,Sapiens - Yuval Harari,Books,450,420,560,5,4.7,110,239400,190400,Budget,Mar
+P059,Think and Grow Rich,Books,199,180,820,15,4.4,45,138506,117770,Budget,Mar
+P060,The Lean Startup,Books,380,350,570,8,4.6,90,199656,153006,Budget,Mar
